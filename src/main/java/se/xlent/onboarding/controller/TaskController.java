@@ -1,13 +1,10 @@
 package se.xlent.onboarding.controller;
 
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import se.xlent.onboarding.model.Task;
 import se.xlent.onboarding.model.TaskType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin(origins ="*")
 @RequestMapping("/api/tasks")
 public class TaskController {
 
@@ -36,6 +34,7 @@ public class TaskController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{taskType}")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity getTasksByType(@PathVariable("taskType") TaskType taskType) {
         try {
             List<Task> tasks = getMockedTasks().stream()
