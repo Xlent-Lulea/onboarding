@@ -1,4 +1,4 @@
-package onboardconfig.com.example.onboardservice;
+package se.xlent.onboarding;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,4 +9,4 @@ public class OnboardServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(OnboardServiceApplication.class, args);
 	}
-}gigg
+}

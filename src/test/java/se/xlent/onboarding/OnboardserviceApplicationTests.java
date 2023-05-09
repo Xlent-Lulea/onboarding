@@ -1,4 +1,4 @@
-package onboardconfig.com.example.onboardservice;
+package se.xlent.onboarding;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
