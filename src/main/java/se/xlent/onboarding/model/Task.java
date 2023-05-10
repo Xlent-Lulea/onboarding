@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.net.URL;
+import java.util.List;
 
 @Entity
 public class Task {
@@ -18,6 +19,8 @@ public class Task {
     private URL url;
     private boolean completed;
 
+    private List<Step> steps;
+
     public Task(Long id, TaskType taskType, String title, String description, URL url, boolean completed) {
         this.id = id;
         this.taskType = taskType;
@@ -25,6 +28,7 @@ public class Task {
         this.description = description;
         this.url = url;
         this.completed = completed;
+
     }
 
     public Long getId() {
@@ -73,5 +77,13 @@ public class Task {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public List<Step> getSteps() {
+        return steps;
+    }
+
+    public void setSteps(List<Step> steps) {
+        this.steps = steps;
     }
 }

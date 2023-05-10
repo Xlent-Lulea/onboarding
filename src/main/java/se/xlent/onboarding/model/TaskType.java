@@ -10,3 +10,4 @@ public enum TaskType {
     AFTER_START_BUDDY,
     AFTER_START_RECRUIT
 }
+

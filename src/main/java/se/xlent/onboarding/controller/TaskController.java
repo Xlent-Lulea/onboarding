@@ -1,6 +1,7 @@
 package se.xlent.onboarding.controller;
 
 import org.springframework.web.bind.annotation.*;
+import se.xlent.onboarding.model.Step;
 import se.xlent.onboarding.model.Task;
 import se.xlent.onboarding.model.TaskType;
 import org.springframework.http.HttpStatus;
@@ -53,9 +54,16 @@ public class TaskController {
     }
 
     private List<Task> getMockedTasks() throws MalformedURLException {
+
         List<Task> t = new ArrayList<>();
-        t.add(new Task(1L, TaskType.BEFORE_START, "Skicka välkomstmail", "Skicka mail enligt mall till den nyanställde.", new URL("https://www.dustin.se/"), false));
+        Task task1 = new Task(1L, TaskType.BEFORE_START, "Cinode", "Skicka mail enligt mall till den nyanställde.", new URL("https://www.dustin.se/"), false);
+        task1.setSteps(new ArrayList<>());
+        task1.getSteps().add(new Step(1L, TaskType.AFTER_START_RECRUIT, "Lägga upp CV", "Lägga upp CV och uppdatera i Cinode – lösen 1a inloggning: xlent123  (när man börjat)", new URL("https://app.cinode.com/start"), false));
+        task1.getSteps().add(new Step(1L, TaskType.AFTER_START_RECRUIT, "Lägga upp CV2", "Lägga upp CV2 och uppdatera i Cinode – lösen 1a inloggning: xlent123  (när man börj2at)", new URL("https://app.cinode.com/start"), false));
+        t.add(task1);
+
         t.add(new Task(1L, TaskType.BEFORE_START, "Beställ blommor", "Blommor beställs från Interflora.", new URL("https://www.interflora.se/"), false));
+
         t.add(new Task(1L, TaskType.AFTER_START_BUDDY, "Gå igenom onboardinglista", "Visa onboardinglistan till den nyanställde.", null, false));
         t.add(new Task(1L, TaskType.AFTER_START_BUDDY, "Bjud på lunch", "Bjud den nyanställde på lunch första arbetsdagen.", null, false));
         t.add(new Task(1L, TaskType.AFTER_START_RECRUIT, "Installera dator", "Bjud den nyanställde på lunch första arbetsdagen.", null, false));
