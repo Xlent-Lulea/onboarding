@@ -35,7 +35,6 @@ public class TaskController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{taskType}")
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity getTasksByType(@PathVariable("taskType") TaskType taskType) {
         try {
             List<Task> tasks = getMockedTasks().stream()
