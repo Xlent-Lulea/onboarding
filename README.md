@@ -6,4 +6,4 @@
 # Swagger
 Starta servern och öppna länken:
 
-[Länk till swagger UI](http://localhost:8080/swagger-ui/index.html)
+[Länk till swagger UI](http://localhost:8081/swagger-ui/index.html)

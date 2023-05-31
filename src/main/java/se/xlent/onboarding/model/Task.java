@@ -1,89 +1,42 @@
 package se.xlent.onboarding.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.net.URL;
-import java.util.List;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
+import se.xlent.onboarding.entity.TaskEntity;
+import se.xlent.onboarding.entity.TaskType;
 
-@Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Task {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(example = "1", required = true, description = "Id of the task")
     private Long id;
+
+    @Schema(example = "BEFORE_START", required = true, description = "Task type of the task")
     private TaskType taskType;
+
+    @Schema(example = "Task 1", required = true, description = "Title of the task")
     private String title;
+
+    @Schema(example = "This is a task", required = true, description = "Description of the task")
     private String description;
-    private URL url;
+
+    @Schema(example = "false", required = true, description = "Uncompleted status of the task")
     private boolean completed;
 
-    private List<Step> steps;
-
-    public Task(Long id, TaskType taskType, String title, String description, URL url, boolean completed) {
-        this.id = id;
-        this.taskType = taskType;
-        this.title = title;
-        this.description = description;
-        this.url = url;
-        this.completed = completed;
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public TaskType getTaskType() {
-        return taskType;
-    }
-
-    public void setTaskType(TaskType taskType) {
-        this.taskType = taskType;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public URL getUrl() {
-        return url;
-    }
-
-    public void setUrl(URL url) {
-        this.url = url;
-    }
-
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
-
-    public List<Step> getSteps() {
-        return steps;
-    }
-
-    public void setSteps(List<Step> steps) {
-        this.steps = steps;
+    public static Task taskBuilder(TaskEntity entity) {
+        return Task.builder()
+                .id(entity.getId())
+                .taskType(entity.getTaskType())
+                .title(entity.getTitle())
+                .description(entity.getDescription())
+                .completed(entity.isCompleted())
+                .build();
     }
 }
+
+
+

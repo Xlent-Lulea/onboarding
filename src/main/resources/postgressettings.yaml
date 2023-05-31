@@ -1,0 +1,27 @@
+server:
+  port: 8081
+
+spring:
+  main:
+    allow-circular-references: true
+  datasource:
+    url: jdbc:postgresql://192.168.20.134:5432/onboarding
+    driverClassName: org.postgresql.Driver
+    username: ms
+    password: test123
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: marcus1sundbom@gmail.com
+    password: wrqqjezotqxhilvo
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
