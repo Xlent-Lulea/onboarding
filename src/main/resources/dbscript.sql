@@ -28,5 +28,14 @@ CREATE TABLE PERSON (
 
 
 
+INSERT INTO PERSON (name, email, active) VALUES ('test1', 'test1@example.com', true);
+INSERT INTO PERSON (name, email, active) VALUES ('test2', 'test2@example.com', false);
+INSERT INTO PERSON (name, email, active) VALUES ('test3', 'test3@example.com', true);
+
+
+INSERT INTO TASK (TaskType, title, description, completed, person_id) VALUES ('BEFORE_START', '1Beställ blommor', 'Blommor beställs från Interflora.', false, 1);
+INSERT INTO TASK (TaskType, title, description, completed, person_id) VALUES ('AFTER_START_BUDDY', '1Beställ tårta', 'Tårta beställs från Tårtan.', false, 1);
+INSERT INTO TASK (TaskType, title, description, completed, person_id) VALUES ('AFTER_START_RECRUIT', '1Beställ kaffe', 'Kaffe beställs från Kaffekompaniet.', false, 1);
+
 
 
