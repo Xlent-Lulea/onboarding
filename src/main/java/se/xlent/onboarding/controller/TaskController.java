@@ -25,16 +25,17 @@ public class TaskController {
     @Autowired
     private PersonService personService;
 
-    @PostMapping(value = "/person/{personId}/tasks", consumes = "application/json", produces = "application/json")
-    public TaskEntity createTask(@PathVariable Long personId, @RequestBody TaskEntity taskEntity) {
+    @PostMapping(value = "/person/{personId}/tasks/{taskType}", consumes = "application/json", produces = "application/json")
+    public TaskEntity createTask(@PathVariable Long personId, @PathVariable TaskType taskType, @RequestBody TaskEntity taskEntity, HttpServletResponse response) {
         PersonEntity personEntity = personService.findPersonById(personId);
         if (personEntity == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Person not found");
         }
+        taskEntity.setTaskType(taskType);
         return taskService.saveUpdateTask(personEntity, taskEntity);
     }
 
-    @PostMapping(value = "/person/{personId}/tasks/{taskId}", consumes = "application/json", produces = "application/json")
+    @PutMapping(value = "/person/{personId}/tasks/{taskId}", consumes = "application/json", produces = "application/json")
     public TaskEntity updateTask(@PathVariable Long personId, @PathVariable Long taskId, @RequestBody TaskEntity taskEntity, HttpServletResponse response) {
         PersonEntity personEntity = personService.findPersonById(personId);
         if (personEntity == null) {

@@ -2,19 +2,20 @@ server:
   port: 8081
 
 spring:
+  jackson:
+    deserialization:
+      read-unknown-enum-values-as-null: true
   main:
     allow-circular-references: true
   datasource:
-    url: jdbc:h2:file:./test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
-  h2:
-    console.enabled: true
+    url: jdbc:postgresql://192.168.20.134:5432/onboarding
+    driverClassName: org.postgresql.Driver
+    username: ms
+    password: test123
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
 
   mail:
     host: smtp.gmail.com
