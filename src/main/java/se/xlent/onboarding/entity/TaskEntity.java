@@ -32,5 +32,7 @@ public class TaskEntity {
     private String description;
     @Column(name = "COMPLETED")
     private boolean completed;
+    @Column(name = "URL")
+    private String url;
 
 }
