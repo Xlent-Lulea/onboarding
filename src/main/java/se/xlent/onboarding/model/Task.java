@@ -27,6 +27,9 @@ public class Task {
     @Schema(example = "false", required = true, description = "Uncompleted status of the task")
     private boolean completed;
 
+    @Schema(example = "https://www.xlent.se", required = true, description = "Url of the task")
+    private String url;
+
     public static Task taskBuilder(TaskEntity entity) {
         return Task.builder()
                 .id(entity.getId())
@@ -34,6 +37,7 @@ public class Task {
                 .title(entity.getTitle())
                 .description(entity.getDescription())
                 .completed(entity.isCompleted())
+                .url(entity.getUrl())
                 .build();
     }
 }
