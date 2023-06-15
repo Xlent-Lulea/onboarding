@@ -13,4 +13,6 @@ public interface TaskRepository extends JpaRepository<TaskEntity, Long> {
 
     List<TaskEntity> findByPerson(Long personId);
     List<TaskEntity> findByPersonAndTaskType(PersonEntity personEntity, TaskType taskType);
+
+
 }

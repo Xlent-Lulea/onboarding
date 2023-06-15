@@ -28,7 +28,7 @@ public class PersonController {
 
     @PostMapping(value = "/createPerson", consumes = "application/json", produces = "application/json")
     public PersonEntity createPerson(@RequestBody PersonEntity personEntity) throws JsonProcessingException {
-        //Skapa upp 1 task i vardera kategori för personen
+        //Standard tasks created when a person is created
         TaskEntity taskEntity1 = new TaskEntity();
         taskEntity1.setTitle("1TitleBeforeStart");
         taskEntity1.setDescription("1DescriptionBeforeStart");

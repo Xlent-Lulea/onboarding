@@ -2,6 +2,7 @@ package se.xlent.onboarding.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.server.ResponseStatusException;
@@ -66,7 +67,24 @@ public class TaskController {
 
     }
 
- 
+    @DeleteMapping(value = "/person/{personId}/tasks/{taskId}")
+    public ResponseEntity<Void> deleteTask(@PathVariable Long personId, @PathVariable Long taskId) {
+        PersonEntity personEntity = personService.findPersonById(personId);
+        if (personEntity == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Person not found");
+        }
+        taskService.deleteTask(taskId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/person/{personId}/tasks/{taskId}", produces = "application/json")
+    public  TaskEntity getTaskById(@PathVariable Long personId, @PathVariable Long taskId) {
+        PersonEntity personEntity = personService.findPersonById(personId);
+        if (personEntity == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Person not found");
+        }
+        return taskService.getTaskById(taskId);
+    }
 
 
 }
