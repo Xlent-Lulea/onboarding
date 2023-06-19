@@ -3,6 +3,7 @@ package se.xlent.onboarding.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,6 +15,7 @@ import se.xlent.onboarding.model.Task;
 import se.xlent.onboarding.service.TaskService;
 import se.xlent.onboarding.service.PersonService;
 
+import java.beans.PropertyEditorSupport;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +28,7 @@ public class TaskController {
     @Autowired
     private PersonService personService;
 
-    @PostMapping(value = "/person/{personId}/tasks/{taskType}", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/person/{personId}/tasks/type/{taskType}", consumes = "application/json", produces = "application/json")
     public TaskEntity createTask(@PathVariable Long personId, @PathVariable TaskType taskType, @RequestBody TaskEntity taskEntity, HttpServletResponse response) {
         PersonEntity personEntity = personService.findPersonById(personId);
         if (personEntity == null) {
@@ -56,7 +58,7 @@ public class TaskController {
     }
 
 
-    @GetMapping(value = "/person/{personId}/tasks/{taskType}", produces = "application/json")
+    @GetMapping(value = "/person/{personId}/tasks/type/{taskType}", produces = "application/json")
     public List<Task> getTasksByPersonAndType(@PathVariable Long personId, @PathVariable TaskType taskType) {
         PersonEntity personEntity = personService.findPersonById(personId);
         if (personEntity == null) {
@@ -86,6 +88,14 @@ public class TaskController {
         return taskService.getTaskById(taskId);
     }
 
-
+    @InitBinder
+    public void initBinder(final WebDataBinder webdataBinder) {
+        webdataBinder.registerCustomEditor(TaskType.class, new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) throws IllegalArgumentException {
+                setValue(TaskType.valueOf(text));
+            }
+        });
+    }
 }
 
