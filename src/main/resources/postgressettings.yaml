@@ -2,6 +2,9 @@ server:
   port: 8081
 
 spring:
+  jackson:
+    deserialization:
+      read-unknown-enum-values-as-null: true
   main:
     allow-circular-references: true
   datasource:

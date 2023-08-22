@@ -43,5 +43,10 @@ public class PersonServiceImpl implements PersonService {
         return personRepository.findByActiveFalse();
     }
 
+    @Override
+    public void deletePerson(PersonEntity personEntity) {
+        personRepository.delete(personEntity);
+    }
+
 
 }

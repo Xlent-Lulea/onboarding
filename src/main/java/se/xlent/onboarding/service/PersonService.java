@@ -1,6 +1,8 @@
 package se.xlent.onboarding.service;
 
+import jakarta.transaction.Transactional;
 import se.xlent.onboarding.entity.PersonEntity;
+import se.xlent.onboarding.entity.TaskEntity;
 
 import java.util.List;
 
@@ -14,6 +16,7 @@ public interface PersonService {
     List<PersonEntity> getAllPersons();
 
     List<PersonEntity> getInactivePersons();
-
+    void deletePerson(PersonEntity personEntity);
 }
+
 

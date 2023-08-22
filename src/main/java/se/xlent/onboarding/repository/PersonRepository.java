@@ -11,4 +11,5 @@ public interface PersonRepository extends JpaRepository<PersonEntity, Long> {
     List<PersonEntity> findByActiveTrue();
 
     List<PersonEntity> findByActiveFalse();
+
 }

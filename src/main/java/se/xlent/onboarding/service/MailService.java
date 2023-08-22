@@ -15,10 +15,11 @@ public class MailService {
 
     public void sendSimpleMessage(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("marcus1sundbom@gmail.com"); // Ska bli onboarding@xlent.se, som också måste läggas till i trusted
+        message.setFrom("marcus.sundbom@xlent.se"); // Ska bli onboarding@xlent.se, som också måste läggas till i trusted
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
         mailSender.send(message);
     }
+    
 }
