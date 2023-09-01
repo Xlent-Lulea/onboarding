@@ -115,6 +115,10 @@ public class PersonController {
         return allPersons.stream().map(Person::persons).collect(Collectors.toList());
     }
 
+    /**
+     * Get inactive persons
+     * @return
+     */
     @GetMapping(value = "/inactivePersons", produces = "application/json")
     public List<Person> getInactivePersons() {
         List<PersonEntity> inactivePersons = personService.getInactivePersons();
