@@ -13,7 +13,6 @@ import se.xlent.onboarding.entity.TaskType;
 import se.xlent.onboarding.model.Person;
 import se.xlent.onboarding.service.PersonService;
 import se.xlent.onboarding.service.TaskService;
-import se.xlent.onboarding.service.PersonServiceImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;
