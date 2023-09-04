@@ -6,7 +6,7 @@ org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TASK" already exists; SQL statem
 CREATE TABLE TASK (
   id BIGSERIAL PRIMARY KEY,
   tasktype VARCHAR(255),
-  title VARCHAR(255),
+  urltitle VARCHAR(255),
   description VARCHAR(255),
   url VARCHAR(255),
   completed BOOLEAN,
@@ -30,7 +30,7 @@ CREATE TABLE PERSON (
 ) [42101-214]
 2023-06-09 13:47:14 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "URL" not found; SQL statement:
-INSERT INTO TASK (TaskType, title, description, url, completed) VALUES ('BEFORE_START', 'Beställ blommor', 'Blommor beställs från Interflora.', 'https://www.interflora.se/', false) [42122-214]
+INSERT INTO TASK (TaskType, urltitle, description, url, completed) VALUES ('BEFORE_START', 'Beställ blommor', 'Blommor beställs från Interflora.', 'https://www.interflora.se/', false) [42122-214]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:502)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
 	at org.h2.message.DbException.get(DbException.java:223)
@@ -92,7 +92,7 @@ INSERT INTO TASK (TaskType, title, description, url, completed) VALUES ('BEFORE_
 	at java.base/java.lang.Thread.run(Thread.java:1623)
 2023-06-09 13:47:14 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "URL" not found; SQL statement:
-INSERT INTO TASK (TaskType, title, description, url, completed) VALUES ('AFTER_START_BUDDY', 'Beställ tårta', 'Tårta beställs från Tårtan.', 'https://www.tartan.se/', false) [42122-214]
+INSERT INTO TASK (TaskType, urltitle, description, url, completed) VALUES ('AFTER_START_BUDDY', 'Beställ tårta', 'Tårta beställs från Tårtan.', 'https://www.tartan.se/', false) [42122-214]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:502)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
 	at org.h2.message.DbException.get(DbException.java:223)
@@ -154,7 +154,7 @@ INSERT INTO TASK (TaskType, title, description, url, completed) VALUES ('AFTER_S
 	at java.base/java.lang.Thread.run(Thread.java:1623)
 2023-06-09 13:47:14 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "URL" not found; SQL statement:
-INSERT INTO TASK (TaskType, title, description, url, completed) VALUES ('AFTER_START_RECRUIT', 'Beställ kaffe', 'Kaffe beställs från Kaffekompaniet.', 'https://www.kaffekompaniet.se/', false) [42122-214]
+INSERT INTO TASK (TaskType, urltitle, description, url, completed) VALUES ('AFTER_START_RECRUIT', 'Beställ kaffe', 'Kaffe beställs från Kaffekompaniet.', 'https://www.kaffekompaniet.se/', false) [42122-214]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:502)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
 	at org.h2.message.DbException.get(DbException.java:223)
@@ -216,7 +216,7 @@ INSERT INTO TASK (TaskType, title, description, url, completed) VALUES ('AFTER_S
 	at java.base/java.lang.Thread.run(Thread.java:1623)
 2023-06-09 13:49:21 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "URL" not found; SQL statement:
-INSERT INTO TASK (TaskType, title, description, url, completed, person_id) VALUES ('BEFORE_START', 'Beställ blommor', 'Blommor beställs från Interflora.', 'https://www.interflora.se/', false, 1) [42122-214]
+INSERT INTO TASK (TaskType, urltitle, description, url, completed, person_id) VALUES ('BEFORE_START', 'Beställ blommor', 'Blommor beställs från Interflora.', 'https://www.interflora.se/', false, 1) [42122-214]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:502)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
 	at org.h2.message.DbException.get(DbException.java:223)
@@ -278,7 +278,7 @@ INSERT INTO TASK (TaskType, title, description, url, completed, person_id) VALUE
 	at java.base/java.lang.Thread.run(Thread.java:1623)
 2023-06-09 13:49:21 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "URL" not found; SQL statement:
-INSERT INTO TASK (TaskType, title, description, url, completed, person_id) VALUES ('AFTER_START_BUDDY', 'Beställ tårta', 'Tårta beställs från Tårtan.', 'https://www.tartan.se/', false, 1) [42122-214]
+INSERT INTO TASK (TaskType, urltitle, description, url, completed, person_id) VALUES ('AFTER_START_BUDDY', 'Beställ tårta', 'Tårta beställs från Tårtan.', 'https://www.tartan.se/', false, 1) [42122-214]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:502)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
 	at org.h2.message.DbException.get(DbException.java:223)
@@ -340,7 +340,7 @@ INSERT INTO TASK (TaskType, title, description, url, completed, person_id) VALUE
 	at java.base/java.lang.Thread.run(Thread.java:1623)
 2023-06-09 13:49:21 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "URL" not found; SQL statement:
-INSERT INTO TASK (TaskType, title, description, url, completed, person_id) VALUES ('AFTER_START_RECRUIT', 'Beställ kaffe', 'Kaffe beställs från Kaffekompaniet.', 'https://www.kaffekompaniet.se/', false, 1) [42122-214]
+INSERT INTO TASK (TaskType, urltitle, description, url, completed, person_id) VALUES ('AFTER_START_RECRUIT', 'Beställ kaffe', 'Kaffe beställs från Kaffekompaniet.', 'https://www.kaffekompaniet.se/', false, 1) [42122-214]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:502)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
 	at org.h2.message.DbException.get(DbException.java:223)

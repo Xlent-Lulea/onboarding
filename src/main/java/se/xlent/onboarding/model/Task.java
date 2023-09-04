@@ -19,7 +19,7 @@ public class Task {
     private TaskType taskType;
 
     @Schema(example = "Task 1", required = true, description = "Title of the task")
-    private String title;
+    private String urltitle;
 
     @Schema(example = "This is a task", required = true, description = "Description of the task")
     private String description;
@@ -34,7 +34,7 @@ public class Task {
         return Task.builder()
                 .id(entity.getId())
                 .taskType(entity.getTaskType())
-                .title(entity.getTitle())
+                .urltitle(entity.getUrltitle())
                 .description(entity.getDescription())
                 .completed(entity.isCompleted())
                 .url(entity.getUrl())
