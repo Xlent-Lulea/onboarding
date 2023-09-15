@@ -400,3 +400,6 @@ INSERT INTO TASK (TaskType, urltitle, description, url, completed, person_id) VA
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.base/java.lang.Thread.run(Thread.java:1623)
+2023-09-12 08:57:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PERSON" not found (this database is empty); SQL statement:
+select p1_0.id,p1_0.active,p1_0.email,p1_0.name from person p1_0 where p1_0.active [42104-214]

@@ -97,5 +97,11 @@ public class TaskController {
             }
         });
     }
+
+    @PutMapping(value = "/task/{taskId}/toggle-completed", produces = "application/json")
+    public TaskEntity toggleTaskCompletedStatus(@PathVariable Long taskId) {
+        return taskService.toggleTaskCompletedStatus(taskId);
+    }
+
 }
 

@@ -15,10 +15,10 @@ public class Task {
     @Schema(example = "1", required = true, description = "Id of the task")
     private Long id;
 
-    @Schema(example = "BEFORE_START", required = true, description = "Task type of the task")
+    @Schema(example = "WELCOME", required = true, description = "Task type of the task")
     private TaskType taskType;
 
-    @Schema(example = "Task 1", required = true, description = "Title of the task")
+    @Schema(example = "Task 1", required = false, description = "Title of the task")
     private String urltitle;
 
     @Schema(example = "This is a task", required = true, description = "Description of the task")
@@ -27,7 +27,7 @@ public class Task {
     @Schema(example = "false", required = true, description = "Uncompleted status of the task")
     private boolean completed;
 
-    @Schema(example = "www.xlent.se", required = true, description = "Url of the task")
+    @Schema(example = "www.xlent.se", required = false, description = "Url of the task")
     private String url;
 
     public static Task taskBuilder(TaskEntity entity) {

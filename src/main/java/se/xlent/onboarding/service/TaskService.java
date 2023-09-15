@@ -37,7 +37,11 @@ public class TaskService {
                 .orElseThrow(() -> new ResponseStatusException(
                         org.springframework.http.HttpStatus.NOT_FOUND, "Task not found" + id));
     }
-
+    public TaskEntity toggleTaskCompletedStatus(Long taskId) {
+        TaskEntity taskEntity = getTaskById(taskId);
+        taskEntity.setCompleted(!taskEntity.isCompleted());
+        return taskRepository.save(taskEntity);
+    }
 
 
     public TaskEntity findTaskById(Long id) {
