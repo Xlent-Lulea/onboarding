@@ -6,7 +6,7 @@ CREATE TABLE PERSON (
   is_active BOOLEAN
 );
 
-CREATE TABLE TASK-ENTITY (
+CREATE TABLE PERSON-TASK (
   id BIGSERIAL PRIMARY KEY,
   task_id BIGINT REFERENCES TASK(id),
   person_id BIGINT REFERENCES PERSON(id),
@@ -15,10 +15,16 @@ CREATE TABLE TASK-ENTITY (
 
 CREATE TABLE TASK (
   id BIGSERIAL PRIMARY KEY,
-  type VARCHAR(255),
+  type BIGINT REFERENCES TASK-TYPE(id),
   title VARCHAR(255),
   description VARCHAR(255),
   url VARCHAR(255)
+);
+
+CREATE TABLE TASK-TYPE (
+  id BIGSERIAL PRIMARY KEY,
+  name VARCHAR(255),
+  task_id BIGINT REFERENCES TASK(id),
 );
 
 -- Lägg till person i Postman via POST 127.0.0.1:8081/createPerson och få standardtask (PersonController.java)
