@@ -26,8 +26,8 @@ public class TaskEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "TASKTYPE")
     private TaskType taskType;
-    @Column(name = "TITLE")
-    private String title;
+    @Column(name = "URLTITLE")
+    private String urltitle;
     @Column(name = "DESCRIPTION")
     private String description;
     @Column(name = "COMPLETED")
