@@ -3,7 +3,9 @@ package se.xlent.onboarding.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.xlent.onboarding.entity.PersonEntity;
+import se.xlent.onboarding.entity.PersonTaskEntity;
 import se.xlent.onboarding.repository.PersonRepository;
+import se.xlent.onboarding.repository.PersonTaskRepository;
 
 import java.util.List;
 
@@ -46,6 +48,14 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public void deletePerson(PersonEntity personEntity) {
         personRepository.delete(personEntity);
+    }
+
+    @Autowired
+    private PersonTaskRepository personTaskRepository;
+
+    @Override
+    public PersonTaskEntity savePersonTask(PersonTaskEntity personTask) {
+        return personTaskRepository.save(personTask);
     }
 
 
