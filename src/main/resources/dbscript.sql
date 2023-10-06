@@ -24,7 +24,6 @@ CREATE TABLE TASK (
 CREATE TABLE TASK-TYPE (
   id BIGSERIAL PRIMARY KEY,
   name VARCHAR(255),
-  task_id BIGINT REFERENCES TASK(id),
 );
 
 -- Lägg till person i Postman via POST 127.0.0.1:8081/createPerson och få standardtask (PersonController.java)

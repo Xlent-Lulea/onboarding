@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import se.xlent.onboarding.entity.PersonEntity;
+import se.xlent.onboarding.entity.PersonTaskEntity;
 import se.xlent.onboarding.entity.TaskEntity;
 import se.xlent.onboarding.entity.TaskType;
 import se.xlent.onboarding.model.Person;
@@ -28,6 +29,7 @@ public class PersonController {
     @Autowired
     private TaskService taskService;
 
+    /*
     @PostMapping(value = "/createPerson", consumes = "application/json", produces = "application/json")
     public PersonEntity createPerson(@RequestBody PersonEntity personEntity) throws JsonProcessingException {
         //Standard tasks created when a person is created
@@ -102,8 +104,26 @@ public class PersonController {
         personEntity.setActive(true);
         PersonEntity savedPersonEntity = personService.saveUpdatePerson(personEntity);
         return savedPersonEntity;
-    }
+    }*/
 
+    @PostMapping(value = "/createPerson", consumes = "application/json", produces = "application/json")
+    public PersonEntity createPerson(@RequestBody PersonEntity personEntity) throws JsonProcessingException {
+        personEntity.setActive(true);
+        PersonEntity savedPersonEntity = personService.saveUpdatePerson(personEntity);
+
+        List<TaskEntity> allTasks = taskService.getAllTasks(); // Assuming you have a method to retrieve all tasks
+
+        for(TaskEntity task : allTasks) {
+            PersonTaskEntity personTask = new PersonTaskEntity();
+            personTask.setPerson(savedPersonEntity);
+            personTask.setTask(task);
+            personTask.setIsCompleted(false);
+
+            personService.savePersonTask(personTask) ; // You'll need to implement this method in your service
+        }
+
+        return savedPersonEntity;
+    }
 
 
     @PostMapping(value = "/updatePerson", consumes = "application/json", produces = "application/json")
