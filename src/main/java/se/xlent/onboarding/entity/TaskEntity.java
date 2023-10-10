@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import se.xlent.onboarding.model.Task;
+import se.xlent.onboarding.model.TaskType;
 
 
 @NoArgsConstructor
@@ -20,19 +22,38 @@ public class TaskEntity {
     @Column(name = "ID")
     private Long id;
     @ManyToOne
-    @JoinColumn(name="PERSON_ID")
+    @JoinColumn(name="TYPE_ID")
     @JsonIgnore
-    private PersonEntity person;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "TASKTYPE")
-    private TaskType taskType;
-    @Column(name = "URLTITLE")
-    private String urltitle;
+    private TaskTypeEntity type;
+    //private Long typeId;
+    @Column(name = "TITLE")
+    private String title;
     @Column(name = "DESCRIPTION")
     private String description;
-    @Column(name = "COMPLETED")
+    @Column(name = "IS_COMPLETED")
     private boolean completed;
     @Column(name = "URL")
     private String url;
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public Long getTypeId() {
+        // return this.typeId;
+        return this.type.getId();
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public String getUrl() {
+        return this.url;
+    }
 
 }

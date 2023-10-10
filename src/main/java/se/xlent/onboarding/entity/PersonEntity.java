@@ -25,15 +25,30 @@ public class PersonEntity implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "PERSON_ID")
     @JsonIgnoreProperties("person")
-    private List<TaskEntity> taskEntities = new ArrayList<>();
+    private List<PersonTaskEntity> tasks = new ArrayList<>();
 
-    @Column(name="ACTIVE")
-    private boolean active;
+    @Column(name="IS_ACTIVE")
+    private boolean isActive;
 
-    public void addTasks(List<TaskEntity> taskEntities) {
-        this.getTaskEntities().addAll(taskEntities);
+    public Long getId() {
+        return this.id;
     }
 
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setIsActive(Boolean value) {
+        this.isActive = value;
+    }
 }
 
 

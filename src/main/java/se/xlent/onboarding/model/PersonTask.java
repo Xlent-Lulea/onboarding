@@ -2,9 +2,7 @@ package se.xlent.onboarding.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-import se.xlent.onboarding.entity.PersonEntity;
 import se.xlent.onboarding.entity.PersonTaskEntity;
-import se.xlent.onboarding.entity.TaskEntity;
 
 @Builder
 @AllArgsConstructor
@@ -17,10 +15,10 @@ public class PersonTask {
     private Long id;
 
     @Schema(example = "1", required = true, description = "Id of Task")
-    private TaskEntity task;
+    private Long taskId;
 
     @Schema(example = "1", required = true, description = "Id of Person")
-    private PersonEntity person;
+    private Long personId;
 
     @Schema(example = "true", required = true, description = "Is the task completed")
     private boolean isCompleted;
@@ -28,9 +26,9 @@ public class PersonTask {
     public static PersonTask personTasks(PersonTaskEntity entity) {
         return PersonTask.builder()
                 .id(entity.getId())
-                .task(entity.getTask())
-                .person(entity.getPerson())
-                .isCompleted(entity.getIsCompleted())
+                .taskId(entity.getTaskId())
+                .personId(entity.getPersonId())
+                .isCompleted(entity.getCompletionStatus())
                 .build();
     }
 

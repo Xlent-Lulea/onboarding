@@ -20,12 +20,52 @@ public class PersonTaskEntity {
     @ManyToOne
     @JoinColumn(name = "TASK_ID")
     private TaskEntity task;
+    // private Long taskId;
 
     @ManyToOne
     @JoinColumn(name = "PERSON_ID")
     private PersonEntity person;
+    //private Long personId;
 
     @Column(name = "IS_COMPLETED")
     private Boolean isCompleted;
 
+    public Long getId() {
+        return id;
+    }
+
+    public Boolean getCompletionStatus() {
+        return this.isCompleted;
+    }
+
+    public void setCompletionStatus(Boolean value) {
+        this.isCompleted = value;
+    }
+
+    public Long getTaskId() {
+        // return taskId;
+        return task.getId();
+    }
+
+    public void setTask(TaskEntity value) {
+        this.task = value;
+    }
+
+    public void setTaskId(Long value) {
+        //this.taskId = value;
+    }
+
+    public Long getPersonId() {
+        //return personId;
+        return person.getId();
+    }
+
+    public void setPersonId(Long value) {
+        //this.personId = value;
+
+    }
+
+    public void setPerson(PersonEntity value) {
+        this.person = value;
+    }
 }

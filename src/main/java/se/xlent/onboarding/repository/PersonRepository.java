@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface PersonRepository extends JpaRepository<PersonEntity, Long> {
 
-    List<PersonEntity> findByActiveTrue();
+    List<PersonEntity> findByIsActiveTrue();
 
-    List<PersonEntity> findByActiveFalse();
+    List<PersonEntity> findByIsActiveFalse();
 
 }

@@ -1,27 +1,68 @@
 package se.xlent.onboarding.service;
 
-import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import se.xlent.onboarding.entity.PersonEntity;
 import se.xlent.onboarding.entity.PersonTaskEntity;
 import se.xlent.onboarding.entity.TaskEntity;
+import se.xlent.onboarding.repository.PersonRepository;
 
 import java.util.List;
 
 
-public interface PersonService {
+@Service
+public class PersonService {
+    private final PersonRepository personRepository;
+    private final TaskService taskService;
+    private final PersonTaskService personTaskService;
 
-    public PersonEntity saveUpdatePerson(PersonEntity personEntity);
-    public PersonEntity findPersonById(Long id);
+    @Autowired
+    public PersonService(
+            PersonRepository personRepository,
+            TaskService taskService,
+            PersonTaskService personTaskService
+    ) {
+        this.personRepository = personRepository;
+        this.taskService = taskService;
+        this.personTaskService = personTaskService;
+    }
 
-    List<PersonEntity> getActivePersons();
+    public PersonEntity create(PersonEntity personEntity) {
+        personEntity.setIsActive(true);
+        List<TaskEntity> allTasks = taskService.getAll();
 
-    List<PersonEntity> getAllPersons();
+        for(TaskEntity task : allTasks) {
+            PersonTaskEntity personTask = new PersonTaskEntity();
+            personTask.setPersonId(personEntity.getId());
+            personTask.setTaskId(task.getId());
+            personTask.setCompletionStatus(false);
 
-    List<PersonEntity> getInactivePersons();
-    void deletePerson(PersonEntity personEntity);
+            personTaskService.save(personEntity, personTask); // You'll need to implement this method in your service
+        }
 
-    PersonTaskEntity savePersonTask(PersonTaskEntity personTask);
+        return personRepository.save(personEntity);
+    }
+    public PersonEntity save(PersonEntity personEntity) {
+        return personRepository.save(personEntity);
+    }
 
+    public PersonEntity getById(Long id) {
+        return personRepository.findById(id).orElse(null);
+    }
+
+    public List<PersonEntity> getActivePersons() {
+        return personRepository.findByIsActiveTrue();
+    }
+
+    public List<PersonEntity> getAll() {
+        return personRepository.findAll();
+    }
+
+    public List<PersonEntity> getInactivePersons() {
+        return personRepository.findByIsActiveFalse();
+    }
+
+    public void delete(PersonEntity personEntity) {
+        personRepository.delete(personEntity);
+    }
 }
-
-
