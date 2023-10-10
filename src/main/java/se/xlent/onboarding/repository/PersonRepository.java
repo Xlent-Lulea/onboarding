@@ -7,9 +7,5 @@ import java.util.List;
 
 
 public interface PersonRepository extends JpaRepository<PersonEntity, Long> {
-
     List<PersonEntity> findByIsActiveTrue();
-
-    List<PersonEntity> findByIsActiveFalse();
-
 }

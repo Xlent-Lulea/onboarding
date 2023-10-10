@@ -58,10 +58,6 @@ public class PersonService {
         return personRepository.findAll();
     }
 
-    public List<PersonEntity> getInactivePersons() {
-        return personRepository.findByIsActiveFalse();
-    }
-
     public void delete(PersonEntity personEntity) {
         personRepository.delete(personEntity);
     }

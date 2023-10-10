@@ -38,7 +38,7 @@ public class PersonController {
         return personService.create(personEntity);
     }
 
-    @PostMapping(value = "/updatePerson", consumes = "application/json", produces = "application/json")
+    @PutMapping(value = "/person/{id}", consumes = "application/json", produces = "application/json")
     public PersonEntity update(@RequestBody PersonEntity personEntity, HttpServletResponse response) {
         response.setHeader("Location", ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/findPerson/" + personEntity.getId()).toUriString());
@@ -50,12 +50,6 @@ public class PersonController {
     public List<Person> getActivePersons() {
         List<PersonEntity> activePersons = personService.getActivePersons();
         return activePersons.stream().map(Person::persons).collect(Collectors.toList());
-    }
-
-    @GetMapping(value = "/inactivePersons", produces = "application/json")
-    public List<Person> getInactivePersons() {
-        List<PersonEntity> inactivePersons = personService.getInactivePersons();
-        return inactivePersons.stream().map(Person::persons).collect(Collectors.toList());
     }
 
     @PutMapping(value = "/person/{id}/deactivate", produces = "application/json")
