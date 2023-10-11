@@ -24,8 +24,6 @@ public class TaskEntity {
     private String title;
     @Column(name = "DESCRIPTION")
     private String description;
-    @Column(name = "IS_COMPLETED")
-    private boolean isCompleted;
     @Column(name = "URL")
     private String url;
 

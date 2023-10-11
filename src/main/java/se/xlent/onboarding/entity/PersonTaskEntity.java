@@ -1,5 +1,6 @@
 package se.xlent.onboarding.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,10 +22,10 @@ public class PersonTaskEntity {
     @JoinColumn(name = "TASK_ID")
     private TaskEntity task;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "PERSON_ID")
     private PersonEntity person;
-    // private Long personId;
 
     @Column(name = "IS_COMPLETED")
     private Boolean isCompleted;
@@ -33,16 +34,16 @@ public class PersonTaskEntity {
         return id;
     }
 
-    public Boolean getCompletionStatus() {
+    public Boolean getIsCompleted() {
         return this.isCompleted;
     }
 
-    public void setCompletionStatus(Boolean value) {
+    public void setIsCompleted(Boolean value) {
         this.isCompleted = value;
     }
 
+    @JsonIgnore
     public Long getTaskId() {
-        // return taskId;
         return task.getId();
     }
 
@@ -50,8 +51,8 @@ public class PersonTaskEntity {
         this.task = value;
     }
 
+    @JsonIgnore
     public Long getPersonId() {
-        //return personId;
         return person.getId();
     }
 
@@ -62,7 +63,7 @@ public class PersonTaskEntity {
     public PersonTaskEntity updatePersonTaskValues(TaskEntity task, PersonEntity person) {
         this.setPerson(person);
         this.setTask(task);
-        this.setCompletionStatus(false);
+        this.setIsCompleted(false);
         return this;
     }
 }

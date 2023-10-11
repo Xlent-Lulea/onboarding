@@ -23,6 +23,8 @@ public class PersonService {
 
     public PersonEntity create(PersonEntity personEntity) {
         personEntity.setIsActive(true);
+        personEntity = personRepository.save(personEntity);
+
         List<TaskEntity> allTasks = taskRepository.findAll();
 
         for (TaskEntity task : allTasks) {
@@ -32,7 +34,7 @@ public class PersonService {
             personTaskService.save(personEntity, personTask);
         }
 
-        return personRepository.save(personEntity);
+        return personEntity;
     }
     public PersonEntity save(PersonEntity personEntity) {
         return personRepository.save(personEntity);
@@ -51,6 +53,12 @@ public class PersonService {
     }
 
     public void delete(PersonEntity personEntity) {
+        List<PersonTaskEntity> tasks = personTaskService.getAllByPersonId(personEntity.getId());
+
+        for (PersonTaskEntity task : tasks) {
+            personTaskService.delete(task);
+        }
+
         personRepository.delete(personEntity);
     }
 }

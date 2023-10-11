@@ -44,7 +44,7 @@ public class PersonTaskService {
 
     public PersonTaskEntity toggleTaskCompletionStatus(Long taskId) {
         PersonTaskEntity personTaskEntity = getById(taskId);
-        personTaskEntity.setCompletionStatus(!personTaskEntity.getCompletionStatus());
+        personTaskEntity.setIsCompleted(!personTaskEntity.getIsCompleted());
         return personTaskRepository.save(personTaskEntity);
     }
 
