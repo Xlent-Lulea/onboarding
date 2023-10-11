@@ -6,28 +6,24 @@ import se.xlent.onboarding.entity.PersonEntity;
 import se.xlent.onboarding.entity.PersonTaskEntity;
 import se.xlent.onboarding.entity.TaskEntity;
 import se.xlent.onboarding.repository.PersonRepository;
+import se.xlent.onboarding.repository.TaskRepository;
 
 import java.util.List;
 
 
 @Service
 public class PersonService {
-    private final PersonRepository personRepository;
+
     @Autowired
-    TaskService taskService;
+    PersonRepository personRepository;
+    @Autowired
+    TaskRepository taskRepository;
     @Autowired
     PersonTaskService personTaskService;
 
-    @Autowired
-    public PersonService(
-            PersonRepository personRepository
-    ) {
-        this.personRepository = personRepository;
-    }
-
     public PersonEntity create(PersonEntity personEntity) {
         personEntity.setIsActive(true);
-        List<TaskEntity> allTasks = taskService.getAll();
+        List<TaskEntity> allTasks = taskRepository.findAll();
 
         for (TaskEntity task : allTasks) {
             PersonTaskEntity personTask = new PersonTaskEntity();
@@ -56,11 +52,5 @@ public class PersonService {
 
     public void delete(PersonEntity personEntity) {
         personRepository.delete(personEntity);
-    }
-
-    public void removePersonTask(PersonEntity person, PersonTaskEntity personTask) {
-        List<PersonTaskEntity> personTasks = personTaskService.getAllByPersonId(person.getId());
-        personTasks.remove(personTask);
-        personRepository.save(person);
     }
 }

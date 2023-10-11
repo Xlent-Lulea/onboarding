@@ -23,7 +23,10 @@ public class PersonTaskService {
     public List<PersonTaskEntity> getAllByPersonId(Long personId) {
         PersonEntity person = personRepository.findById(personId).orElse(null);
         return personTaskRepository.findByPerson(person);
-        // return personTaskRepository.findByPersonId(personId);
+    }
+
+    public List<PersonTaskEntity> getAllByTask(TaskEntity task) {
+        return personTaskRepository.findByTask(task);
     }
 
     public PersonTaskEntity getById(Long id) {

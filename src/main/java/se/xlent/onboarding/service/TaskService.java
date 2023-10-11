@@ -6,7 +6,6 @@ import org.springframework.web.server.ResponseStatusException;
 import se.xlent.onboarding.entity.PersonEntity;
 import se.xlent.onboarding.entity.PersonTaskEntity;
 import se.xlent.onboarding.entity.TaskEntity;
-import se.xlent.onboarding.entity.TaskTypeEntity;
 import se.xlent.onboarding.repository.TaskRepository;
 
 import java.util.List;
@@ -20,8 +19,6 @@ public class TaskService {
     PersonService personService;
     @Autowired
     PersonTaskService personTaskService;
-    @Autowired
-    TaskTypeService taskTypeService;
 
     public List<TaskEntity> getAll() {
         return taskRepository.findAll();
@@ -64,13 +61,9 @@ public class TaskService {
 
     public void delete(Long taskId) {
         TaskEntity taskEntity = getById(taskId);
-        List<PersonEntity> persons = personService.getAll();
+        List<PersonTaskEntity> personTasks = personTaskService.getAllByTask(taskEntity);
 
-        for (PersonEntity person : persons) {
-            PersonTaskEntity personTask =
-                    personTaskService.getByPersonAndTask(person, taskEntity);
-
-            personService.removePersonTask(person, personTask);
+        for (PersonTaskEntity personTask : personTasks) {
             personTaskService.delete(personTask);
         }
 
