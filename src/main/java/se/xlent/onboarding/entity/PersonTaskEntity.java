@@ -20,12 +20,11 @@ public class PersonTaskEntity {
     @ManyToOne
     @JoinColumn(name = "TASK_ID")
     private TaskEntity task;
-    // private Long taskId;
 
     @ManyToOne
     @JoinColumn(name = "PERSON_ID")
     private PersonEntity person;
-    //private Long personId;
+    // private Long personId;
 
     @Column(name = "IS_COMPLETED")
     private Boolean isCompleted;
@@ -51,18 +50,9 @@ public class PersonTaskEntity {
         this.task = value;
     }
 
-    public void setTaskId(Long value) {
-        //this.taskId = value;
-    }
-
     public Long getPersonId() {
         //return personId;
         return person.getId();
-    }
-
-    public void setPersonId(Long value) {
-        //this.personId = value;
-
     }
 
     public void setPerson(PersonEntity value) {

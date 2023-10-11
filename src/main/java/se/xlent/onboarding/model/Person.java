@@ -28,13 +28,4 @@ public class Person {
 
     @Schema(example = "true", required = true, description = "Active status of the person")
     private boolean isActive;
-
-    public static Person persons(PersonEntity entity) {
-        return Person.builder()
-                .id(entity.getId())
-                .name(entity.getName())
-                .email(entity.getEmail())
-                .isActive(entity.getIsActive())
-                .build();
-    }
 }

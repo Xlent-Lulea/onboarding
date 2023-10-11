@@ -15,12 +15,4 @@ public class TaskType {
     private Long id;
     @Schema(example = "Välkommen", required = true, description = "Name of the task type")
     private String name;
-
-    public static TaskType taskTypeBuilder(TaskTypeEntity entity) {
-        return TaskType.builder()
-                .id(entity.getId())
-                .name(entity.getName())
-                .build();
-    }
-
 }

@@ -29,7 +29,7 @@ public class TaskController {
 
     @PostMapping(value = "/tasks", consumes = "application/json", produces = "application/json")
     public TaskEntity create(@RequestBody TaskEntity taskEntity, HttpServletResponse response) {
-        return taskService.save(taskEntity);
+        return taskService.create(taskEntity);
     }
 
     @PutMapping(value = "/tasks/{id}", consumes = "application/json", produces = "application/json")

@@ -17,24 +17,27 @@ public class PersonEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Long id;
+    private long id;
     @Column(name="NAME")
     private String name;
     @Column(name="EMAIL")
     private String email;
+
+    /*
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "PERSON_ID")
     @JsonIgnoreProperties("person")
     private List<PersonTaskEntity> tasks = new ArrayList<>();
+     */
 
     @Column(name="IS_ACTIVE")
     private boolean isActive;
 
-    public Long getId() {
+    public long getId() {
         return this.id;
     }
 
-    public Boolean getIsActive() {
+    public boolean getIsActive() {
         return isActive;
     }
 
@@ -46,7 +49,7 @@ public class PersonEntity implements Serializable {
         return name;
     }
 
-    public void setIsActive(Boolean value) {
+    public void setIsActive(boolean value) {
         this.isActive = value;
     }
 }

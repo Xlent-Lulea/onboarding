@@ -13,18 +13,16 @@ import java.util.List;
 @Service
 public class PersonService {
     private final PersonRepository personRepository;
-    private final TaskService taskService;
-    private final PersonTaskService personTaskService;
+    @Autowired
+    TaskService taskService;
+    @Autowired
+    PersonTaskService personTaskService;
 
     @Autowired
     public PersonService(
-            PersonRepository personRepository,
-            TaskService taskService,
-            PersonTaskService personTaskService
+            PersonRepository personRepository
     ) {
         this.personRepository = personRepository;
-        this.taskService = taskService;
-        this.personTaskService = personTaskService;
     }
 
     public PersonEntity create(PersonEntity personEntity) {
@@ -37,7 +35,7 @@ public class PersonService {
             personTask.setTaskId(task.getId());
             personTask.setCompletionStatus(false);
 
-            personTaskService.save(personEntity, personTask); // You'll need to implement this method in your service
+            personTaskService.save(personEntity, personTask);
         }
 
         return personRepository.save(personEntity);
@@ -60,5 +58,11 @@ public class PersonService {
 
     public void delete(PersonEntity personEntity) {
         personRepository.delete(personEntity);
+    }
+
+    public void removePersonTask(PersonEntity person, PersonTaskEntity personTask) {
+        List<PersonTaskEntity> personTasks = personTaskService.getAllByPersonId(person.getId());
+        personTasks.remove(personTask);
+        personRepository.save(person);
     }
 }

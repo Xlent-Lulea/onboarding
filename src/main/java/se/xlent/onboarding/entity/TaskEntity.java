@@ -23,15 +23,13 @@ public class TaskEntity {
     private Long id;
     @ManyToOne
     @JoinColumn(name="TYPE_ID")
-    @JsonIgnore
     private TaskTypeEntity type;
-    //private Long typeId;
     @Column(name = "TITLE")
     private String title;
     @Column(name = "DESCRIPTION")
     private String description;
     @Column(name = "IS_COMPLETED")
-    private boolean completed;
+    private boolean isCompleted;
     @Column(name = "URL")
     private String url;
 
@@ -43,9 +41,8 @@ public class TaskEntity {
         return this.title;
     }
 
-    public Long getTypeId() {
-        // return this.typeId;
-        return this.type.getId();
+    public TaskTypeEntity getType() {
+        return this.type;
     }
 
     public String getDescription() {

@@ -6,6 +6,7 @@ import se.xlent.onboarding.entity.TaskEntity;
 import se.xlent.onboarding.entity.TaskTypeEntity;
 import se.xlent.onboarding.model.Task;
 import se.xlent.onboarding.model.TaskType;
+import se.xlent.onboarding.repository.PersonRepository;
 import se.xlent.onboarding.repository.TaskRepository;
 import se.xlent.onboarding.repository.TaskTypeRepository;
 
@@ -20,7 +21,9 @@ public class TaskTypeService {
     }
 
     public List<TaskTypeEntity> getAll() {
-        return taskTypeRepository.findAll();
+        List<TaskTypeEntity> types = taskTypeRepository.findAll();
+        System.out.println(types);
+        return types;
     }
 
     public TaskTypeEntity getById(Long taskTypeId) {

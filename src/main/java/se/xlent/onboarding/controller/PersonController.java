@@ -22,14 +22,12 @@ public class PersonController {
     private PersonService personService;
 
     @GetMapping(value = "/persons", produces = "application/json")
-    public List<Person> getAll() {
-        List<PersonEntity> allPersons = personService.getAll();
-        return allPersons.stream().map(Person::persons).collect(Collectors.toList());
+    public List<PersonEntity> getAll() {
+        return personService.getAll();
     }
 
     @GetMapping(value = "/person/{id}", produces = "application/json")
     public PersonEntity getById(@PathVariable Long id) {
-
         return personService.getById(id);
     }
 
@@ -47,9 +45,8 @@ public class PersonController {
     }
 
     @GetMapping(value = "/activePersons", produces = "application/json")
-    public List<Person> getActivePersons() {
-        List<PersonEntity> activePersons = personService.getActivePersons();
-        return activePersons.stream().map(Person::persons).collect(Collectors.toList());
+    public List<PersonEntity> getActivePersons() {
+        return personService.getActivePersons();
     }
 
     @PutMapping(value = "/person/{id}/deactivate", produces = "application/json")

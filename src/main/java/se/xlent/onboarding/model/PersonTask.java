@@ -22,20 +22,6 @@ public class PersonTask {
 
     @Schema(example = "true", required = true, description = "Is the task completed")
     private boolean isCompleted;
-
-    public static PersonTask personTasks(PersonTaskEntity entity) {
-        return PersonTask.builder()
-                .id(entity.getId())
-                .taskId(entity.getTaskId())
-                .personId(entity.getPersonId())
-                .isCompleted(entity.getCompletionStatus())
-                .build();
-    }
-
-
-
-
-
 }
 
 

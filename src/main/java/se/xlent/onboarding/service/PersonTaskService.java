@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import se.xlent.onboarding.entity.PersonEntity;
 import se.xlent.onboarding.entity.PersonTaskEntity;
+import se.xlent.onboarding.entity.TaskEntity;
 import se.xlent.onboarding.repository.PersonRepository;
 import se.xlent.onboarding.repository.PersonTaskRepository;
 
@@ -14,10 +15,10 @@ import java.util.List;
 public class PersonTaskService {
 
     @Autowired
-    private PersonTaskRepository personTaskRepository;
+    PersonTaskRepository personTaskRepository;
 
     @Autowired
-    private PersonRepository personRepository;
+    PersonRepository personRepository;
 
     public List<PersonTaskEntity> getAllByPersonId(Long personId) {
         PersonEntity person = personRepository.findById(personId).orElse(null);
@@ -30,6 +31,10 @@ public class PersonTaskService {
                 org.springframework.http.HttpStatus.NOT_FOUND, "PersonTask not found " + id));
     }
 
+    public PersonTaskEntity getByPersonAndTask(PersonEntity person, TaskEntity task) {
+        return personTaskRepository.findByPersonAndTask(person, task);
+    }
+
     public PersonTaskEntity save(PersonEntity person, PersonTaskEntity personTask) {
         return personTaskRepository.save(personTask);
     }
@@ -38,5 +43,9 @@ public class PersonTaskService {
         PersonTaskEntity personTaskEntity = getById(taskId);
         personTaskEntity.setCompletionStatus(!personTaskEntity.getCompletionStatus());
         return personTaskRepository.save(personTaskEntity);
+    }
+
+    public void delete(PersonTaskEntity personTaskEntity) {
+        personTaskRepository.delete(personTaskEntity);
     }
 }
