@@ -22,7 +22,6 @@ public class TaskTypeService {
 
     public List<TaskTypeEntity> getAll() {
         List<TaskTypeEntity> types = taskTypeRepository.findAll();
-        System.out.println(types);
         return types;
     }
 
