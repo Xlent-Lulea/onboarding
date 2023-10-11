@@ -23,13 +23,6 @@ public class PersonEntity implements Serializable {
     @Column(name="EMAIL")
     private String email;
 
-    /*
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "PERSON_ID")
-    @JsonIgnoreProperties("person")
-    private List<PersonTaskEntity> tasks = new ArrayList<>();
-     */
-
     @Column(name="IS_ACTIVE")
     private boolean isActive;
 

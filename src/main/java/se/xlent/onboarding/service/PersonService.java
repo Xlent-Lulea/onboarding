@@ -29,11 +29,9 @@ public class PersonService {
         personEntity.setIsActive(true);
         List<TaskEntity> allTasks = taskService.getAll();
 
-        for(TaskEntity task : allTasks) {
+        for (TaskEntity task : allTasks) {
             PersonTaskEntity personTask = new PersonTaskEntity();
-            personTask.setPersonId(personEntity.getId());
-            personTask.setTaskId(task.getId());
-            personTask.setCompletionStatus(false);
+            personTask.updatePersonTaskValues(task, personEntity);
 
             personTaskService.save(personEntity, personTask);
         }

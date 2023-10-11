@@ -34,6 +34,8 @@ public class TaskService {
     }
 
     public TaskEntity create(TaskEntity taskEntity) {
+        taskEntity = taskRepository.save(taskEntity);
+
         List<PersonEntity> persons = personService.getAll();
 
         for (PersonEntity person : persons) {
@@ -42,23 +44,20 @@ public class TaskService {
                             .updatePersonTaskValues(taskEntity, person);
 
             personTaskService.save(person, personTask);
-            personService.save(person);
         }
 
-        return taskRepository.save(taskEntity);
+        return taskEntity;
     }
 
     public TaskEntity save(TaskEntity taskEntity) {
         List<PersonEntity> persons = personService.getAll();
 
         for (PersonEntity person : persons) {
-
             PersonTaskEntity personTask =
                     personTaskService.getByPersonAndTask(person, taskEntity)
                             .updatePersonTaskValues(taskEntity, person);
 
             personTaskService.save(person, personTask);
-            personService.save(person);
         }
         return taskRepository.save(taskEntity);
     }

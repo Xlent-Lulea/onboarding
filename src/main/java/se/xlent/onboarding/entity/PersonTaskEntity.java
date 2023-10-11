@@ -58,4 +58,11 @@ public class PersonTaskEntity {
     public void setPerson(PersonEntity value) {
         this.person = value;
     }
+
+    public PersonTaskEntity updatePersonTaskValues(TaskEntity task, PersonEntity person) {
+        this.setPerson(person);
+        this.setTask(task);
+        this.setCompletionStatus(false);
+        return this;
+    }
 }

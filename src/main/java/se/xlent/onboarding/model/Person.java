@@ -23,9 +23,6 @@ public class Person {
     @Schema(example = "marcus.sundbom@xlent.se", required = true, description = "Email of the person")
     private String email;
 
-    @Schema(example = "[]", required = true, description = "List")
-    private List<PersonTaskEntity> tasks = new ArrayList<>();
-
     @Schema(example = "true", required = true, description = "Active status of the person")
     private boolean isActive;
 }

@@ -15,8 +15,7 @@ public class Task {
     private Long id;
 
     @Schema(example = "1", required = true, description = "Id of the task type")
-    private TaskType type;
-    // private Long typeId;
+    private Long typeId;
 
     @Schema(example = "Task 1", required = false, description = "Title of the task")
     private String title;
