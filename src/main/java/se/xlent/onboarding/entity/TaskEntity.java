@@ -1,7 +1,5 @@
 package se.xlent.onboarding.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,19 +18,33 @@ public class TaskEntity {
     @Column(name = "ID")
     private Long id;
     @ManyToOne
-    @JoinColumn(name="PERSON_ID")
-    @JsonIgnore
-    private PersonEntity person;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "TASKTYPE")
-    private TaskType taskType;
-    @Column(name = "URLTITLE")
-    private String urltitle;
+    @JoinColumn(name="TYPE_ID")
+    private TaskTypeEntity type;
+    @Column(name = "TITLE")
+    private String title;
     @Column(name = "DESCRIPTION")
     private String description;
-    @Column(name = "COMPLETED")
-    private boolean completed;
     @Column(name = "URL")
     private String url;
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public TaskTypeEntity getType() {
+        return this.type;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public String getUrl() {
+        return this.url;
+    }
 
 }

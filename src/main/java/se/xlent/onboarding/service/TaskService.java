@@ -1,11 +1,11 @@
 package se.xlent.onboarding.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import se.xlent.onboarding.entity.PersonEntity;
+import se.xlent.onboarding.entity.PersonTaskEntity;
 import se.xlent.onboarding.entity.TaskEntity;
-import se.xlent.onboarding.entity.TaskType;
-import se.xlent.onboarding.repository.PersonRepository;
 import se.xlent.onboarding.repository.TaskRepository;
 
 import java.util.List;
@@ -13,60 +13,60 @@ import java.util.List;
 @Service
 public class TaskService {
 
+    @Autowired
+    TaskRepository taskRepository;
+    @Autowired
+    PersonService personService;
+    @Autowired
+    PersonTaskService personTaskService;
 
-    private TaskRepository taskRepository;
-
-    private PersonRepository personRepository;
-
-    public TaskService(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
-
-    public List<TaskEntity> getAllTasks() {
+    public List<TaskEntity> getAll() {
         return taskRepository.findAll();
     }
 
-
-    public TaskEntity saveUpdateTask(PersonEntity personEntity, TaskEntity taskEntity) {
-        personEntity.getTaskEntities().add(taskEntity);
-        return taskRepository.save(taskEntity);
-    }
-
-    public TaskEntity getTaskById(Long id) {
+    public TaskEntity getById(Long id) {
         return taskRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         org.springframework.http.HttpStatus.NOT_FOUND, "Task not found" + id));
     }
-    public TaskEntity toggleTaskCompletedStatus(Long taskId) {
-        TaskEntity taskEntity = getTaskById(taskId);
-        taskEntity.setCompleted(!taskEntity.isCompleted());
+
+    public TaskEntity create(TaskEntity taskEntity) {
+        taskEntity = taskRepository.save(taskEntity);
+
+        List<PersonEntity> persons = personService.getAll();
+
+        for (PersonEntity person : persons) {
+            PersonTaskEntity personTask =
+                    new PersonTaskEntity()
+                            .updatePersonTaskValues(taskEntity, person);
+
+            personTaskService.save(person, personTask);
+        }
+
+        return taskEntity;
+    }
+
+    public TaskEntity save(TaskEntity taskEntity) {
+        List<PersonEntity> persons = personService.getAll();
+
+        for (PersonEntity person : persons) {
+            PersonTaskEntity personTask =
+                    personTaskService.getByPersonAndTask(person, taskEntity)
+                            .updatePersonTaskValues(taskEntity, person);
+
+            personTaskService.save(person, personTask);
+        }
         return taskRepository.save(taskEntity);
     }
 
+    public void delete(Long taskId) {
+        TaskEntity taskEntity = getById(taskId);
+        List<PersonTaskEntity> personTasks = personTaskService.getAllByTask(taskEntity);
 
-    public TaskEntity findTaskById(Long id) {
-        return taskRepository.findById(id).orElse(null);
-    }
+        for (PersonTaskEntity personTask : personTasks) {
+            personTaskService.delete(personTask);
+        }
 
-    public List<TaskEntity> getTasksByType(TaskType taskType) {
-        return taskRepository.findByTaskType(taskType);
-    }
-
-
-    public List<TaskEntity> getTasksByPerson(Long personId) {
-        return taskRepository.findByPerson(personId);
-    }
-
-    public List<TaskEntity> getTasksByPersonAndTaskType(PersonEntity personEntity, TaskType taskType) {
-        return taskRepository.findByPersonAndTaskType(personEntity, taskType);
-    }
-
-    public List<TaskEntity> saveAllTasks(List<TaskEntity> taskEntities) {
-        return taskRepository.saveAll(taskEntities);
-    }
-
-    public void deleteTask(Long taskId) {
-        TaskEntity taskEntity = getTaskById(taskId);
         taskRepository.delete(taskEntity);
     }
 }

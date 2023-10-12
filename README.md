@@ -13,10 +13,14 @@ It is also to modernize the process and to make it more enjoyable.
 
 ### Set up H2 database locally ###
 
-* Remove scope = test from artifactId = h2 in pom.xml
-* Replace contents of application.yaml with the contents of h2settings.yaml
-* [Download](https://www.h2database.com) and connect to H2 database
-* Run the queries of src/main/resources/dbscript.sql
+1. Remove scope = test from artifactId = h2 in pom.xml and 
+make sure the version number matches your locally installed version of h2
+2. Replace contents of application.yaml with the contents of h2settings.yaml
+3. Start server to create tables of the database and then close server
+4. [Download](https://www.h2database.com) and connect to H2 database. 
+Make sure JDBC URL points to test at the root of this project
+5. Run the queries of src/main/resources/dbscript.sql
+6. Disconnect from the database before starting the server
 
 ### Set up postgres database locally ### 
 

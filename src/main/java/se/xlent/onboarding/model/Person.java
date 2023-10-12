@@ -3,7 +3,7 @@ package se.xlent.onboarding.model;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import se.xlent.onboarding.entity.PersonEntity;
-import se.xlent.onboarding.entity.TaskEntity;
+import se.xlent.onboarding.entity.PersonTaskEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,18 +23,6 @@ public class Person {
     @Schema(example = "marcus.sundbom@xlent.se", required = true, description = "Email of the person")
     private String email;
 
-    private List<TaskEntity> taskEntities = new ArrayList<>();
-
     @Schema(example = "true", required = true, description = "Active status of the person")
-    private boolean active;
-
-    public static Person persons(PersonEntity entity) {
-        return Person.builder()
-                .id(entity.getId())
-                .name(entity.getName())
-                .email(entity.getEmail())
-                .active(entity.isActive())
-                .build();
-    }
-
+    private boolean isActive;
 }

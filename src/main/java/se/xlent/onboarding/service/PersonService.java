@@ -1,22 +1,64 @@
 package se.xlent.onboarding.service;
 
-import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import se.xlent.onboarding.entity.PersonEntity;
+import se.xlent.onboarding.entity.PersonTaskEntity;
 import se.xlent.onboarding.entity.TaskEntity;
+import se.xlent.onboarding.repository.PersonRepository;
+import se.xlent.onboarding.repository.TaskRepository;
 
 import java.util.List;
 
 
-public interface PersonService {
-    public PersonEntity saveUpdatePerson(PersonEntity personEntity);
-    public PersonEntity findPersonById(Long id);
+@Service
+public class PersonService {
 
-    List<PersonEntity> getActivePersons();
+    @Autowired
+    PersonRepository personRepository;
+    @Autowired
+    TaskRepository taskRepository;
+    @Autowired
+    PersonTaskService personTaskService;
 
-    List<PersonEntity> getAllPersons();
+    public PersonEntity create(PersonEntity personEntity) {
+        personEntity.setIsActive(true);
+        personEntity = personRepository.save(personEntity);
 
-    List<PersonEntity> getInactivePersons();
-    void deletePerson(PersonEntity personEntity);
+        List<TaskEntity> allTasks = taskRepository.findAll();
+
+        for (TaskEntity task : allTasks) {
+            PersonTaskEntity personTask = new PersonTaskEntity();
+            personTask.updatePersonTaskValues(task, personEntity);
+
+            personTaskService.save(personEntity, personTask);
+        }
+
+        return personEntity;
+    }
+    public PersonEntity save(PersonEntity personEntity) {
+        return personRepository.save(personEntity);
+    }
+
+    public PersonEntity getById(Long id) {
+        return personRepository.findById(id).orElse(null);
+    }
+
+    public List<PersonEntity> getActivePersons() {
+        return personRepository.findByIsActiveTrue();
+    }
+
+    public List<PersonEntity> getAll() {
+        return personRepository.findAll();
+    }
+
+    public void delete(PersonEntity personEntity) {
+        List<PersonTaskEntity> tasks = personTaskService.getAllByPersonId(personEntity.getId());
+
+        for (PersonTaskEntity task : tasks) {
+            personTaskService.delete(task);
+        }
+
+        personRepository.delete(personEntity);
+    }
 }
-
-
