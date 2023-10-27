@@ -8,57 +8,31 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @Entity
-@Getter
-@Setter
 @Table(name = "PERSON_TASK")
 public class PersonTaskEntity {
 
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 
+    @Getter
+    @Setter
     @ManyToOne
     @JoinColumn(name = "TASK_ID")
     private TaskEntity task;
 
+    @Setter
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "PERSON_ID")
     private PersonEntity person;
 
+    @Getter
+    @Setter
     @Column(name = "IS_COMPLETED")
     private Boolean isCompleted;
-
-    public Long getId() {
-        return id;
-    }
-
-    public Boolean getIsCompleted() {
-        return this.isCompleted;
-    }
-
-    public void setIsCompleted(Boolean value) {
-        this.isCompleted = value;
-    }
-
-    @JsonIgnore
-    public Long getTaskId() {
-        return task.getId();
-    }
-
-    public void setTask(TaskEntity value) {
-        this.task = value;
-    }
-
-    @JsonIgnore
-    public Long getPersonId() {
-        return person.getId();
-    }
-
-    public void setPerson(PersonEntity value) {
-        this.person = value;
-    }
 
     public PersonTaskEntity updatePersonTaskValues(TaskEntity task, PersonEntity person) {
         this.setPerson(person);

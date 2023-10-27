@@ -1,14 +1,12 @@
 package se.xlent.onboarding.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-import se.xlent.onboarding.entity.TaskEntity;
 
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@AllArgsConstructor
 public class Task {
 
     @Schema(example = "1", required = true, description = "Id of the task")
@@ -17,9 +15,11 @@ public class Task {
     @Schema(example = "1", required = true, description = "Id of the task type")
     private Long typeId;
 
+    @NotBlank
     @Schema(example = "Task 1", required = false, description = "Title of the task")
     private String title;
 
+    @NotBlank
     @Schema(example = "This is a task", required = true, description = "Description of the task")
     private String description;
 

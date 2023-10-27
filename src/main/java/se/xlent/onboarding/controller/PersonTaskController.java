@@ -18,9 +18,8 @@ public class PersonTaskController {
     private PersonTaskService personTaskService;
 
     @GetMapping("/person/{personId}/tasks")
-    public ResponseEntity<List<PersonTaskEntity>> getAllByPersonId(@PathVariable Long personId) {
-        List<PersonTaskEntity> tasks = personTaskService.getAllByPersonId(personId);
-        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    public List<PersonTaskEntity> getAllByPersonId(@PathVariable Long personId) {
+        return personTaskService.getAllByPersonId(personId);
     }
 
      @GetMapping(value = "/person/{personId}/tasks/{taskId}", produces = "application/json")

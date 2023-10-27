@@ -1,50 +1,35 @@
 package se.xlent.onboarding.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
 @NoArgsConstructor
 @Entity
-@Setter
-@Getter
 @Table(name = "PERSON")
-public class PersonEntity implements Serializable {
+public class PersonEntity {
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private long id;
+    private Long id;
+
+    @Getter
+    @NotBlank
     @Column(name="NAME")
     private String name;
+
+    @Getter
+    @Email
+    @NotBlank
     @Column(name="EMAIL")
     private String email;
 
+    @Getter
+    @Setter
     @Column(name="IS_ACTIVE")
-    private boolean isActive;
-
-    public long getId() {
-        return this.id;
-    }
-
-    public boolean getIsActive() {
-        return isActive;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setIsActive(boolean value) {
-        this.isActive = value;
-    }
+    private Boolean isActive = true;
 }
-
-
