@@ -27,24 +27,4 @@ public class TaskEntity {
     @Column(name = "URL")
     private String url;
 
-    public Long getId() {
-        return this.id;
-    }
-
-    public String getTitle() {
-        return this.title;
-    }
-
-    public TaskTypeEntity getType() {
-        return this.type;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public String getUrl() {
-        return this.url;
-    }
-
 }
