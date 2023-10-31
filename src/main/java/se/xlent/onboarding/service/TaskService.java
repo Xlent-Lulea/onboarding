@@ -65,7 +65,6 @@ public class TaskService {
         }
 
         List<PersonTaskEntity> personTasks = personTaskService.getAllByTask(task);
-
         for (PersonTaskEntity personTask : personTasks) {
             personTaskService.delete(personTask);
         }
