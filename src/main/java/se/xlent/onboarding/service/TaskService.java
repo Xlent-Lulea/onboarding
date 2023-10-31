@@ -61,8 +61,8 @@ public class TaskService {
 
     public void delete(Long taskId) {
         TaskEntity taskEntity = getById(taskId);
-        List<PersonTaskEntity> personTasks = personTaskService.getAllByTask(taskEntity);
 
+        List<PersonTaskEntity> personTasks = personTaskService.getAllByTask(taskEntity);
         for (PersonTaskEntity personTask : personTasks) {
             personTaskService.delete(personTask);
         }
