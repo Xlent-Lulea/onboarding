@@ -44,5 +44,11 @@ public class TaskTypeController {
         taskTypeService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping(value = "/taskTypes/{id}/name", consumes = "text/plain", produces = "application/json")
+    public TaskTypeEntity updateName(@PathVariable Long id, @RequestBody String newName) {
+        return taskTypeService.updateName(id, newName);
+    }
+
 }
 

@@ -49,4 +49,10 @@ public class TaskTypeService {
 
         taskTypeRepository.delete(taskTypeEntity);
     }
+    public TaskTypeEntity updateName(Long taskTypeId, String newName) {
+        TaskTypeEntity taskTypeEntity = getById(taskTypeId);
+        taskTypeEntity.setName(newName);
+        return taskTypeRepository.save(taskTypeEntity);
+    }
+
 }
