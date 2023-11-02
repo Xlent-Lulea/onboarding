@@ -2,7 +2,7 @@ package se.xlent.onboarding.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import org.webjars.NotFoundException;
 import se.xlent.onboarding.entity.PersonEntity;
 import se.xlent.onboarding.entity.PersonTaskEntity;
 import se.xlent.onboarding.entity.TaskEntity;
@@ -25,48 +25,50 @@ public class TaskService {
     }
 
     public TaskEntity getById(Long id) {
-        return taskRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        org.springframework.http.HttpStatus.NOT_FOUND, "Task not found" + id));
+        return taskRepository.findById(id).orElse(null);
     }
 
-    public TaskEntity create(TaskEntity taskEntity) {
-        taskEntity = taskRepository.save(taskEntity);
+    public TaskEntity create(TaskEntity task) {
+        task = taskRepository.save(task);
 
         List<PersonEntity> persons = personService.getAll();
 
         for (PersonEntity person : persons) {
             PersonTaskEntity personTask =
                     new PersonTaskEntity()
-                            .updatePersonTaskValues(taskEntity, person);
+                            .updatePersonTaskValues(task, person);
 
-            personTaskService.save(person, personTask);
+            personTaskService.save(personTask);
         }
 
-        return taskEntity;
+        return task;
     }
 
-    public TaskEntity save(TaskEntity taskEntity) {
+    public TaskEntity save(TaskEntity task) {
         List<PersonEntity> persons = personService.getAll();
 
         for (PersonEntity person : persons) {
             PersonTaskEntity personTask =
-                    personTaskService.getByPersonAndTask(person, taskEntity)
-                            .updatePersonTaskValues(taskEntity, person);
+                    personTaskService.getByPersonAndTask(person, task)
+                            .updatePersonTaskValues(task, person);
 
-            personTaskService.save(person, personTask);
+            personTaskService.save(personTask);
         }
-        return taskRepository.save(taskEntity);
+        return taskRepository.save(task);
     }
 
-    public void delete(Long taskId) {
-        TaskEntity taskEntity = getById(taskId);
+    public void delete(Long taskId) throws NotFoundException {
+        TaskEntity task = getById(taskId);
 
-        List<PersonTaskEntity> personTasks = personTaskService.getAllByTask(taskEntity);
+        if (task == null) {
+            throw new NotFoundException("Task with id " + taskId + " not found");
+        }
+
+        List<PersonTaskEntity> personTasks = personTaskService.getAllByTask(task);
         for (PersonTaskEntity personTask : personTasks) {
             personTaskService.delete(personTask);
         }
 
-        taskRepository.delete(taskEntity);
+        taskRepository.delete(task);
     }
 }

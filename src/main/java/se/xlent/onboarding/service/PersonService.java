@@ -2,6 +2,7 @@ package se.xlent.onboarding.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 import se.xlent.onboarding.entity.PersonEntity;
 import se.xlent.onboarding.entity.PersonTaskEntity;
 import se.xlent.onboarding.entity.TaskEntity;
@@ -21,23 +22,22 @@ public class PersonService {
     @Autowired
     PersonTaskService personTaskService;
 
-    public PersonEntity create(PersonEntity personEntity) {
-        personEntity.setIsActive(true);
-        personEntity = personRepository.save(personEntity);
+    public PersonEntity create(PersonEntity person) {
+        person = personRepository.save(person);
 
         List<TaskEntity> allTasks = taskRepository.findAll();
 
         for (TaskEntity task : allTasks) {
             PersonTaskEntity personTask = new PersonTaskEntity();
-            personTask.updatePersonTaskValues(task, personEntity);
+            personTask.updatePersonTaskValues(task, person);
 
-            personTaskService.save(personEntity, personTask);
+            personTaskService.save(personTask);
         }
 
-        return personEntity;
+        return person;
     }
-    public PersonEntity save(PersonEntity personEntity) {
-        return personRepository.save(personEntity);
+    public PersonEntity save(PersonEntity person) {
+        return personRepository.save(person);
     }
 
     public PersonEntity getById(Long id) {
@@ -52,13 +52,13 @@ public class PersonService {
         return personRepository.findAll();
     }
 
-    public void delete(PersonEntity personEntity) {
-        List<PersonTaskEntity> tasks = personTaskService.getAllByPersonId(personEntity.getId());
+    public void delete(PersonEntity person) throws NotFoundException {
+        List<PersonTaskEntity> tasks = personTaskService.getAllByPersonId(person.getId());
 
         for (PersonTaskEntity task : tasks) {
             personTaskService.delete(task);
         }
 
-        personRepository.delete(personEntity);
+        personRepository.delete(person);
     }
 }

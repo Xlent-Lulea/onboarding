@@ -2,7 +2,7 @@ package se.xlent.onboarding.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import org.webjars.NotFoundException;
 import se.xlent.onboarding.entity.PersonEntity;
 import se.xlent.onboarding.entity.PersonTaskEntity;
 import se.xlent.onboarding.entity.TaskEntity;
@@ -20,8 +20,13 @@ public class PersonTaskService {
     @Autowired
     PersonRepository personRepository;
 
-    public List<PersonTaskEntity> getAllByPersonId(Long personId) {
+    public List<PersonTaskEntity> getAllByPersonId(Long personId) throws NotFoundException {
         PersonEntity person = personRepository.findById(personId).orElse(null);
+
+        if (person == null) {
+            throw new NotFoundException("Person with id " + personId + " not found");
+        }
+
         return personTaskRepository.findByPerson(person);
     }
 
@@ -30,15 +35,14 @@ public class PersonTaskService {
     }
 
     public PersonTaskEntity getById(Long id) {
-        return personTaskRepository.findById(id).orElseThrow(() -> new ResponseStatusException(
-                org.springframework.http.HttpStatus.NOT_FOUND, "PersonTask not found " + id));
+        return personTaskRepository.findById(id).orElse(null);
     }
 
     public PersonTaskEntity getByPersonAndTask(PersonEntity person, TaskEntity task) {
         return personTaskRepository.findByPersonAndTask(person, task);
     }
 
-    public PersonTaskEntity save(PersonEntity person, PersonTaskEntity personTask) {
+    public PersonTaskEntity save(PersonTaskEntity personTask) {
         return personTaskRepository.save(personTask);
     }
 
@@ -48,7 +52,7 @@ public class PersonTaskService {
         return personTaskRepository.save(personTaskEntity);
     }
 
-    public void delete(PersonTaskEntity personTaskEntity) {
-        personTaskRepository.delete(personTaskEntity);
+    public void delete(PersonTaskEntity personTask) {
+        personTaskRepository.delete(personTask);
     }
 }

@@ -1,18 +1,18 @@
 package se.xlent.onboarding.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.webjars.NotFoundException;
 import se.xlent.onboarding.entity.PersonEntity;
-import se.xlent.onboarding.model.Person;
 import se.xlent.onboarding.service.PersonService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @RestController
@@ -27,21 +27,27 @@ public class PersonController {
     }
 
     @GetMapping(value = "/person/{id}", produces = "application/json")
-    public PersonEntity getById(@PathVariable Long id) {
-        return personService.getById(id);
+    public PersonEntity getById(@PathVariable Long id) throws ResponseStatusException {
+        PersonEntity person = personService.getById(id);
+
+        if (person == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Person with id " + id + " not found");
+        }
+
+        return person;
     }
 
     @PostMapping(value = "/person", consumes = "application/json", produces = "application/json")
-    public PersonEntity create(@RequestBody PersonEntity personEntity) throws JsonProcessingException {
-        return personService.create(personEntity);
+    public PersonEntity create(@Valid @RequestBody PersonEntity person) {
+        return personService.create(person);
     }
 
     @PutMapping(value = "/person/{id}", consumes = "application/json", produces = "application/json")
-    public PersonEntity update(@RequestBody PersonEntity personEntity, HttpServletResponse response) {
+    public PersonEntity update(@Valid @RequestBody PersonEntity person, HttpServletResponse response) {
         response.setHeader("Location", ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/findPerson/" + personEntity.getId()).toUriString());
+                .path("/findPerson/" + person.getId()).toUriString());
 
-        return personService.save(personEntity);
+        return personService.save(person);
     }
 
     @GetMapping(value = "/activePersons", produces = "application/json")
@@ -50,31 +56,43 @@ public class PersonController {
     }
 
     @PutMapping(value = "/person/{id}/deactivate", produces = "application/json")
-    public PersonEntity deactivatePerson(@PathVariable Long id) {
-        PersonEntity personEntity = personService.getById(id);
-        if (personEntity == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Person not found");
+    public PersonEntity deactivatePerson(@PathVariable Long id) throws ResponseStatusException {
+        PersonEntity person = personService.getById(id);
+
+        if (person == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Person with id " + id + " not found");
         }
-        personEntity.setIsActive(false);
-        return personService.save(personEntity);
+
+        person.setIsActive(false);
+        return personService.save(person);
     }
 
     @PutMapping(value = "/person/{id}/activate", produces = "application/json")
-    public PersonEntity activatePerson(@PathVariable Long id) {
-        PersonEntity personEntity = personService.getById(id);
-        if (personEntity == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Person not found");
+    public PersonEntity activatePerson(@PathVariable Long id) throws ResponseStatusException {
+        PersonEntity person = personService.getById(id);
+
+        if (person == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Person with id " + id + " not found");
         }
-        personEntity.setIsActive(true);
-        return personService.save(personEntity);
+
+        person.setIsActive(true);
+        return personService.save(person);
     }
 
     @DeleteMapping(value = "/person/{id}", produces = "application/json")
-    public void delete(@PathVariable Long id) {
-        PersonEntity personEntity = personService.getById(id);
-        if (personEntity == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Person not found");
+    public ResponseEntity<Void> delete(@PathVariable Long id) throws ResponseStatusException {
+        PersonEntity person = personService.getById(id);
+
+        if (person == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Person with id " + id + " not found");
         }
-        personService.delete(personEntity);
+
+        try {
+            personService.delete(person);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+
+        return ResponseEntity.noContent().build();
     }
 }

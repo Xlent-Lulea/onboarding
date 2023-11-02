@@ -1,7 +1,8 @@
 package se.xlent.onboarding.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import org.webjars.NotFoundException;
 import se.xlent.onboarding.entity.TaskEntity;
 import se.xlent.onboarding.entity.TaskTypeEntity;
 import se.xlent.onboarding.repository.TaskRepository;
@@ -11,42 +12,41 @@ import java.util.List;
 
 @Service
 public class TaskTypeService {
-    private final TaskTypeRepository taskTypeRepository;
-    private final TaskRepository taskRepository;
-    private final TaskService taskService;
 
-    public TaskTypeService(TaskTypeRepository taskTypeRepository, TaskRepository taskRepository, TaskService taskService) {
-        this.taskTypeRepository = taskTypeRepository;
-        this.taskRepository = taskRepository;
-        this.taskService = taskService;
-    }
+    @Autowired
+    private TaskTypeRepository taskTypeRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
+
+    @Autowired
+    private TaskService taskService;
 
     public List<TaskTypeEntity> getAll() {
-        List<TaskTypeEntity> types = taskTypeRepository.findAll();
-        return types;
+        return taskTypeRepository.findAll();
     }
 
     public TaskTypeEntity getById(Long taskTypeId) {
-        return taskTypeRepository.findById(taskTypeId).orElseThrow(() ->
-                new ResponseStatusException(
-                        org.springframework.http.HttpStatus.NOT_FOUND,
-                        "TaskType not found" + taskTypeId
-                ));
+        return taskTypeRepository.findById(taskTypeId).orElse(null);
     }
 
-    public TaskTypeEntity save(TaskTypeEntity taskTypeEntity) {
-        return taskTypeRepository.save(taskTypeEntity);
+    public TaskTypeEntity save(TaskTypeEntity taskType) {
+        return taskTypeRepository.save(taskType);
     }
 
-    public void delete(Long taskTypeId) {
-        TaskTypeEntity taskTypeEntity = getById(taskTypeId);
+    public void delete(Long taskTypeId) throws NotFoundException {
+        TaskTypeEntity taskType = getById(taskTypeId);
+
+        if (taskType == null) {
+            throw new NotFoundException("TaskType with id " + taskTypeId + " not found");
+        }
 
         // Delete associated tasks (cascades to PersonTasks)
-        List<TaskEntity> tasks = taskRepository.findByType(taskTypeEntity);
+        List<TaskEntity> tasks = taskRepository.findByType(taskType);
         for (TaskEntity task : tasks) {
             taskService.delete(task.getId());
         }
 
-        taskTypeRepository.delete(taskTypeEntity);
+        taskTypeRepository.delete(taskType);
     }
 }
