@@ -2,6 +2,7 @@ package se.xlent.onboarding.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 import se.xlent.onboarding.entity.PersonEntity;
 import se.xlent.onboarding.entity.PersonTaskEntity;
 import se.xlent.onboarding.entity.TaskEntity;
@@ -51,7 +52,7 @@ public class PersonService {
         return personRepository.findAll();
     }
 
-    public void delete(PersonEntity person) {
+    public void delete(PersonEntity person) throws NotFoundException {
         List<PersonTaskEntity> tasks = personTaskService.getAllByPersonId(person.getId());
 
         for (PersonTaskEntity task : tasks) {

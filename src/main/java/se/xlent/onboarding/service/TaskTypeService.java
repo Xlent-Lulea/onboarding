@@ -5,9 +5,6 @@ import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 import se.xlent.onboarding.entity.TaskEntity;
 import se.xlent.onboarding.entity.TaskTypeEntity;
-import se.xlent.onboarding.model.Task;
-import se.xlent.onboarding.model.TaskType;
-import se.xlent.onboarding.repository.PersonRepository;
 import se.xlent.onboarding.repository.TaskRepository;
 import se.xlent.onboarding.repository.TaskTypeRepository;
 

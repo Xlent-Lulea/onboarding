@@ -43,7 +43,7 @@ public class TaskController {
     }
 
     @PutMapping(value = "/tasks/{id}", consumes = "application/json", produces = "application/json")
-    public TaskEntity update(@PathVariable Long id, @RequestBody TaskEntity task, HttpServletResponse response) {
+    public TaskEntity update(@PathVariable Long id, @Valid @RequestBody TaskEntity task, HttpServletResponse response) {
         response.setHeader("Location", ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/tasks/" + id).toUriString());
         return taskService.save(task);

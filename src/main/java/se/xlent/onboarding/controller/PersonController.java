@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.webjars.NotFoundException;
 import se.xlent.onboarding.entity.PersonEntity;
 import se.xlent.onboarding.service.PersonService;
 
@@ -86,7 +87,12 @@ public class PersonController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Person with id " + id + " not found");
         }
 
-        personService.delete(person);
+        try {
+            personService.delete(person);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+
         return ResponseEntity.noContent().build();
     }
 }
