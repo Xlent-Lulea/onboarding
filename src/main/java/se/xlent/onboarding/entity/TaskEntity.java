@@ -3,6 +3,7 @@ package se.xlent.onboarding.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,13 +27,16 @@ public class TaskEntity {
     private TaskTypeEntity type;
 
     @NotBlank
-    @Column(name = "TITLE")
+    @Size(max = 255)
+    @Column(name = "TITLE", columnDefinition = "NVARCHAR(255)")
     private String title;
 
     @NotBlank
-    @Column(name = "DESCRIPTION")
+    @Size(max = 255)
+    @Column(name = "DESCRIPTION", columnDefinition = "NVARCHAR(255)")
     private String description;
 
-    @Column(name = "URL")
+    @Size(max = 255)
+    @Column(name = "URL", columnDefinition = "NVARCHAR(255)")
     private String url;
 }

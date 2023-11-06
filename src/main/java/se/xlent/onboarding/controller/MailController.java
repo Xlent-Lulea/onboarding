@@ -1,6 +1,7 @@
 package se.xlent.onboarding.controller;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,6 +10,7 @@ import se.xlent.onboarding.model.TaskEmail;
 import se.xlent.onboarding.service.MailService;
 
 @RestController
+@Validated
 @CrossOrigin(origins ="*")
 public class MailController {
 
