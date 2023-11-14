@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
 
 spring:
   jackson:
@@ -8,14 +8,10 @@ spring:
   main:
     allow-circular-references: true
   datasource:
-    url: jdbc:postgresql://192.168.20.134:5432/onboarding
-    driverClassName: org.postgresql.Driver
-    username: ms
-    password: test123
+    initialization-mode: always
+    #driverClassName: org.postgresql.Driver
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: none
+    #database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   mail:
     host: smtp.gmail.com
