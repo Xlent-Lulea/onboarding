@@ -1,6 +1,6 @@
 image:
   repository: localhost:32000/onboarding-backend
-  tag: 0.7.7
+  tag: 0.8.0
 
 service:
   port: 8080
