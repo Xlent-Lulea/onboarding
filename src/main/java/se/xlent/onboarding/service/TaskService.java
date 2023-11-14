@@ -50,7 +50,7 @@ public class TaskService {
 
 
     public List<TaskEntity> getTasksByPerson(Long personId) {
-        return taskRepository.findByPerson(personId);
+        return taskRepository.findByPersonId(personId);
     }
 
     public List<TaskEntity> getTasksByPersonAndTaskType(PersonEntity personEntity, TaskType taskType) {

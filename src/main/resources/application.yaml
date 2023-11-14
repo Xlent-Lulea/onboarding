@@ -1,26 +1,11 @@
 server:
   port: 8080
 
+management:
+  health:
+    probes:
+      enabled: true
+
 spring:
-  jackson:
-    deserialization:
-      read-unknown-enum-values-as-null: true
-  main:
-    allow-circular-references: true
   datasource:
     initialization-mode: always
-    #driverClassName: org.postgresql.Driver
-  jpa:
-    #database-platform: org.hibernate.dialect.PostgreSQLDialect
-
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: marcus1sundbom@gmail.com
-    password: wrqqjezotqxhilvo
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true

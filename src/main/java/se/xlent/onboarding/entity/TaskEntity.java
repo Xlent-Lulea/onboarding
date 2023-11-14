@@ -14,7 +14,6 @@ import lombok.Setter;
 @Setter
 @Table(name = "TASK")
 public class TaskEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
@@ -26,7 +25,7 @@ public class TaskEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "TASKTYPE")
     private TaskType taskType;
-    @Column(name = "TITLE")
+    @Column(name = "URLTITLE")
     private String title;
     @Column(name = "DESCRIPTION")
     private String description;
@@ -34,5 +33,4 @@ public class TaskEntity {
     private boolean completed;
     @Column(name = "URL")
     private String url;
-
 }
