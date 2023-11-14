@@ -1,8 +1,9 @@
 package se.xlent.onboarding.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,23 +15,28 @@ import lombok.Setter;
 @Setter
 @Table(name = "TASK")
 public class TaskEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
+
+    @NotNull
     @ManyToOne
-    @JoinColumn(name="PERSON_ID")
-    @JsonIgnore
-    private PersonEntity person;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "TASKTYPE")
-    private TaskType taskType;
-    @Column(name = "URLTITLE")
+    @JoinColumn(name="TYPE_ID")
+    private TaskTypeEntity type;
+
+    @NotBlank
+    @Size(max = 255)
+    @Column(name = "TITLE", columnDefinition = "NVARCHAR(255)")
     private String title;
-    @Column(name = "DESCRIPTION")
+
+    @NotBlank
+    @Size(max = 255)
+    @Column(name = "DESCRIPTION", columnDefinition = "NVARCHAR(255)")
     private String description;
-    @Column(name = "COMPLETED")
-    private boolean completed;
-    @Column(name = "URL")
+
+    @Size(max = 255)
+    @Column(name = "URL", columnDefinition = "NVARCHAR(255)")
     private String url;
 }
