@@ -1,8 +1,9 @@
 package se.xlent.onboarding.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
+import org.springframework.web.server.ResponseStatusException;
 import se.xlent.onboarding.entity.TaskEntity;
 import se.xlent.onboarding.entity.TaskTypeEntity;
 import se.xlent.onboarding.repository.TaskRepository;
@@ -34,11 +35,11 @@ public class TaskTypeService {
         return taskTypeRepository.save(taskType);
     }
 
-    public void delete(Long taskTypeId) throws NotFoundException {
+    public void delete(Long taskTypeId) throws ResponseStatusException {
         TaskTypeEntity taskType = getById(taskTypeId);
 
         if (taskType == null) {
-            throw new NotFoundException("TaskType with id " + taskTypeId + " not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "TaskType with id " + taskTypeId + " not found");
         }
 
         // Delete associated tasks (cascades to PersonTasks)

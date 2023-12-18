@@ -1,8 +1,9 @@
 package se.xlent.onboarding.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
+import org.springframework.web.server.ResponseStatusException;
 import se.xlent.onboarding.entity.PersonEntity;
 import se.xlent.onboarding.entity.PersonTaskEntity;
 import se.xlent.onboarding.entity.TaskEntity;
@@ -20,11 +21,11 @@ public class PersonTaskService {
     @Autowired
     PersonRepository personRepository;
 
-    public List<PersonTaskEntity> getAllByPersonId(Long personId) throws NotFoundException {
+    public List<PersonTaskEntity> getAllByPersonId(Long personId) {
         PersonEntity person = personRepository.findById(personId).orElse(null);
 
         if (person == null) {
-            throw new NotFoundException("Person with id " + personId + " not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Person with id " + personId + " not found");
         }
 
         return personTaskRepository.findByPerson(person);

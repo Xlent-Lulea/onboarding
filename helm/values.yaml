@@ -1,0 +1,11 @@
+image:
+  repository: localhost:32000/onboarding-backend
+  tag: 0.8.0
+
+service:
+  port: 8080
+  database:
+    username: "postgres"
+    passwordsecret: "onboarding-database-postgresql"
+    passwordkey: "postgres-password"
+    url: "jdbc:postgresql://onboarding-database-postgresql.default.svc.cluster.local:5432/onboarding"

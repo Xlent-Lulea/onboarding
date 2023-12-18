@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.webjars.NotFoundException;
 import se.xlent.onboarding.entity.TaskEntity;
 import se.xlent.onboarding.service.TaskService;
 
@@ -53,11 +52,7 @@ public class TaskController {
 
     @DeleteMapping(value = "/tasks/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        try {
             taskService.delete(id);
-        } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }
 
         return ResponseEntity.noContent().build();
     }
