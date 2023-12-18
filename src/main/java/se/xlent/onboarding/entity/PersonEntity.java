@@ -21,14 +21,14 @@ public class PersonEntity {
     @Getter
     @NotBlank
     @Size(max = 255)
-    @Column(name="NAME", columnDefinition = "NVARCHAR(255)")
+    @Column(name="NAME", columnDefinition = "VARCHAR(255)")
     private String name;
 
     @Getter
     @Email
     @NotBlank
     @Size(max = 255)
-    @Column(name="EMAIL", columnDefinition = "NVARCHAR(255)")
+    @Column(name="EMAIL", columnDefinition = "VARCHAR(255)")
     private String email;
 
     @Getter

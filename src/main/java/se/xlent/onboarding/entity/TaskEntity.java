@@ -28,15 +28,15 @@ public class TaskEntity {
 
     @NotBlank
     @Size(max = 255)
-    @Column(name = "TITLE", columnDefinition = "NVARCHAR(255)")
+    @Column(name = "TITLE", columnDefinition = "VARCHAR(255)")
     private String title;
 
     @NotBlank
     @Size(max = 255)
-    @Column(name = "DESCRIPTION", columnDefinition = "NVARCHAR(255)")
+    @Column(name = "DESCRIPTION", columnDefinition = "VARCHAR(255)")
     private String description;
 
     @Size(max = 255)
-    @Column(name = "URL", columnDefinition = "NVARCHAR(255)")
+    @Column(name = "URL", columnDefinition = "VARCHAR(255)")
     private String url;
 }

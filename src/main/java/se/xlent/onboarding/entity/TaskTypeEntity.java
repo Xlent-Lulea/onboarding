@@ -20,6 +20,6 @@ public class TaskTypeEntity {
     @Getter
     @NotBlank
     @Size(max = 255)
-    @Column(name = "NAME", columnDefinition = "NVARCHAR(255)")
+    @Column(name = "NAME", columnDefinition = "VARCHAR(255)")
     private String name;
 }
