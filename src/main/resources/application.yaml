@@ -1,25 +1,3 @@
 spring:
   profiles:
     active: dev
-
-#server:
-#  port: 8080
-#
-#management:
-#  health:
-#    probes:
-#      enabled: true
-#
-#spring:
-#  profiles:
-#    active: dev
-#  datasource:
-#    url: jdbc:postgresql://master:30503/onboarding
-#    driverClassName: org.postgresql.Driver
-#    username: postgres
-#    password: jY1yQFy7z5
-#  jpa:
-#    database-platform: org.hibernate.dialect.PostgreSQLDialect
-#    hibernate:
-#      ddl-auto: update
-#
