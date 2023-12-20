@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @Validated
-@CrossOrigin(origins ="*")
+@CrossOrigin
 public class TaskController {
 
     @Autowired
