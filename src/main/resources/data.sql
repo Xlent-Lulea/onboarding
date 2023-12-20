@@ -1,31 +1,3 @@
--- Skapa upp en databas som går att använda för att testa applikationen.
-CREATE TABLE PERSON (
-  id BIGSERIAL PRIMARY KEY,
-  name VARCHAR(255),
-  email VARCHAR(255),
-  is_active BOOLEAN
-);
-
-CREATE TABLE TASK_TYPE (
-  id BIGSERIAL PRIMARY KEY,
-  name VARCHAR(255)
-);
-
-CREATE TABLE TASK (
-  id BIGSERIAL PRIMARY KEY,
-  type_id BIGINT REFERENCES TASK_TYPE(id),
-  title VARCHAR(255),
-  description VARCHAR(255),
-  url VARCHAR(255)
-);
-
-CREATE TABLE PERSON_TASK (
-  id BIGSERIAL PRIMARY KEY,
-  task_id BIGINT REFERENCES TASK(id),
-  person_id BIGINT REFERENCES PERSON(id),
-  is_completed BOOLEAN
-);
-
 INSERT INTO TASK_TYPE (name)
 VALUES ('Välkommen'),
         ('Buddy/Coach'),
@@ -66,8 +38,3 @@ VALUES
     (SELECT id FROM TASK WHERE type_id = 5, (SELECT id FROM PERSON WHERE email = 'john.doe@exsade.com'), false),
     (SELECT id FROM TASK WHERE type_id = 6, (SELECT id FROM PERSON WHERE email = 'john.doe@exsade.com'), false),
     (SELECT id FROM TASK WHERE type_id = 7, (SELECT id FROM PERSON WHERE email = 'john.doe@exsade.com'), false);
-
-
-
-
-

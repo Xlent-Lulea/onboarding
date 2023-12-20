@@ -6,34 +6,27 @@ A checklist of onboarding activities is central for the application.
 The purpose of the project is to collect onboarding activities to one place and to streamline the planning of it. 
 It is also to modernize the process and to make it more enjoyable.
 
+## Database initialization
+The initialization of the database tabels are not made with JPA and the update flag. Its not an proper solution, but
+for our own needs it does what we need with minimum complexity. If we need something later we will add Flyway with
+database migration to the application.
+
 ## Dependencies ##
 * Java Development Kit (JDK) version 17
 
-## Development Server ##
+### Set up postgres database locally ###
+TBD.
 
-### Set up H2 database locally ###
+### Connect to production database ###
+If you want to start the application locally and connect to the production database you first have to update the
+**application-prod.yaml** with the URL, username and password to the database.
 
-1. Remove scope = test from artifactId = h2 in pom.xml and 
-make sure the version number matches your locally installed version of h2
-2. Replace contents of application.yaml with the contents of h2settings.yaml
-3. Start server to create tables of the database and then close server
-4. [Download](https://www.h2database.com) and connect to H2 database. 
-Make sure JDBC URL points to test at the root of this project
-5. Run the queries of src/main/resources/dbscript.sql
-6. Disconnect from the database before starting the server
+When that is updated you will start the app with the following command:
+```./mvnw spring-boot:run -Dspring-boot.run.profiles=prod ```
 
-### Set up postgres database locally ### 
-
-TBD
-
-### Connect to production database ### 
-
-TBD
-
-### Start server ### 
-
-Run `./mvnw spring-boot:run` to start the server
-
+### Start server with H2 locally ### 
+Run `./mvnw spring-boot:run` to start the server. Spring Boot will automatically start up an H2 database, connect to it
+and fill it with some test data from the **data.sql**.
 
 ## Build ##
 
