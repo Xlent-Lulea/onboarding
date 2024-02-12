@@ -23,6 +23,7 @@ public class PersonTaskEntity {
     @JoinColumn(name = "TASK_ID")
     private TaskEntity task;
 
+    @Getter
     @Setter
     @JsonIgnore
     @ManyToOne

@@ -19,6 +19,7 @@ public class PersonEntity {
     private Long id;
 
     @Getter
+    @Setter
     @NotBlank
     @Size(max = 255)
     @Column(name="NAME", columnDefinition = "VARCHAR(255)")

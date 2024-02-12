@@ -49,6 +49,9 @@ public class TaskService {
         List<PersonEntity> persons = personService.getAll();
 
         for (PersonEntity person : persons) {
+            if (task.getType().getId() == 0) {
+                continue;
+            }
             PersonTaskEntity personTask =
                     personTaskService.getByPersonAndTask(person, task)
                             .updatePersonTaskValues(task, person);
