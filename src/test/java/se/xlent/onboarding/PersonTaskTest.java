@@ -1,21 +1,23 @@
 package se.xlent.onboarding;
 
 import org.junit.jupiter.api.Test;
-import se.xlent.onboarding.entity.PersonEntity;
-import se.xlent.onboarding.entity.PersonTaskEntity;
-import se.xlent.onboarding.entity.TaskEntity;
+import se.xlent.onboarding.model.Person;
+import se.xlent.onboarding.model.PersonTask;
+import se.xlent.onboarding.model.Task;
+import se.xlent.onboarding.model.TaskType;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class PersonTaskEntityTest {
+public class PersonTaskTest {
 
     @Test
     void testUpdatePersonTaskValues() {
-        PersonTaskEntity personTask = new PersonTaskEntity();
+        PersonTask personTask = new PersonTask();
         personTask.setIsCompleted(true);
-        TaskEntity task = new TaskEntity();
-        PersonEntity person = new PersonEntity();
+        Task task = new Task();
+        task.setType(new TaskType());
+        Person person = new Person();
 
         personTask.updatePersonTaskValues(task, person);
 

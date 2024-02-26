@@ -4,20 +4,19 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
-import se.xlent.onboarding.entity.PersonEntity;
-import se.xlent.onboarding.entity.PersonTaskEntity;
-import se.xlent.onboarding.entity.TaskEntity;
 import org.mockito.Mock;
 import org.mockito.InjectMocks;
+import se.xlent.onboarding.model.Person;
+import se.xlent.onboarding.model.PersonTask;
+import se.xlent.onboarding.model.Task;
+import se.xlent.onboarding.model.TaskType;
 import se.xlent.onboarding.repository.TaskRepository;
-import se.xlent.onboarding.service.PersonService;
-import se.xlent.onboarding.service.PersonTaskService;
-import se.xlent.onboarding.service.TaskService;
+import se.xlent.onboarding.service.*;
+import se.xlent.onboarding.support.mapper.TaskMapper;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -26,54 +25,60 @@ import static org.mockito.Mockito.*;
 public class TaskServiceTest {
 
     @Mock
-    private PersonService personService;
+    private TaskMapper taskMapper;
 
     @Mock
-    private PersonTaskService personTaskService;
+    private PersonServiceImpl personService;
+
+    @Mock
+    private PersonTaskServiceImpl personTaskService;
 
     @Mock
     private TaskRepository taskRepository;
 
     @InjectMocks
-    private TaskService taskService;
+    private TaskServiceImpl taskService;
 
     @Test
     void multipleTestCreate() {
-        List<PersonEntity> persons = new ArrayList<>();
+        List<Person> persons = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
             testCreate(persons);
-            persons.add(new PersonEntity());
+            persons.add(new Person());
             reset(personTaskService, taskRepository); // Reset method call counters
         }
     }
 
-    private void testCreate(List<PersonEntity> persons) {
-        TaskEntity taskToCreate = new TaskEntity();
+    private void testCreate(List<Person> persons) {
+        Task taskToCreate = new Task();
+        taskToCreate.setType(new TaskType());
         when(personService.getAll()).thenReturn(persons);
 
         taskService.create(taskToCreate);
 
         verify(personTaskService, times(persons.size())).save(argThat(Objects::nonNull));
-        verify(taskRepository).save(taskToCreate);
+        verify(taskRepository).save(any());
     }
 
     @Test
     void multipleTestSave() {
-        List<PersonEntity> persons = new ArrayList<>();
+        List<Person> persons = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
             testSave(persons);
-            persons.add(new PersonEntity());
+            persons.add(new Person());
             reset(personTaskService, taskRepository); // Reset method call counters
         }
     }
 
-    private void testSave(List<PersonEntity> persons) {
-        TaskEntity taskToSave = new TaskEntity();
+    private void testSave(List<Person> persons) {
+        Task taskToSave = new Task();
+        taskToSave.setType(new TaskType());
+        taskToSave.getType().setId(1L);
         when(personService.getAll()).thenReturn(persons);
-        when(personTaskService.getByPersonAndTask(any(), any())).thenAnswer(invocation -> {
-            PersonTaskEntity personTask = new PersonTaskEntity();
+        when(personTaskService.getByPersonIdAndTaskId(any(), any())).thenAnswer(invocation -> {
+            PersonTask personTask = new PersonTask();
             personTask.setTask(taskToSave);
             return personTask;
         });
@@ -82,29 +87,30 @@ public class TaskServiceTest {
 
         verify(personTaskService, times(persons.size())).save(argThat(personTask ->
                 taskToSave.equals(personTask.getTask())));
-        verify(taskRepository).save(taskToSave);
+        verify(taskRepository).save(any());
     }
 
     @Test
     void multipleTestDelete() {
-        List<PersonEntity> persons = new ArrayList<>();
+        List<Person> persons = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
             testDelete(persons);
-            persons.add(new PersonEntity());
+            persons.add(new Person());
             reset(personTaskService, taskRepository); // Reset method call counters
         }
     }
 
-    private void testDelete(List<PersonEntity> persons) {
-        TaskEntity taskToDelete = new TaskEntity();
-        taskToDelete.setId(1L);
-        when(taskService.getById(anyLong())).thenAnswer(invocation -> Optional.of(taskToDelete));
-        when(personTaskService.getAllByTask(any())).thenAnswer(invocation -> {
-            List<PersonTaskEntity> personTasks = new ArrayList<>();
+    private void testDelete(List<Person> persons) {
+        Long id = 1L;
+        Task taskToDelete = new Task();
+        taskToDelete.setId(id);
+        taskToDelete.setType(new TaskType());
+        when(personTaskService.getAllByTaskId(anyLong())).thenAnswer(invocation -> {
+            List<PersonTask> personTasks = new ArrayList<>();
 
-            for (PersonEntity ignored : persons) {
-                PersonTaskEntity personTask = new PersonTaskEntity();
+            for (Person ignored : persons) {
+                PersonTask personTask = new PersonTask();
                 personTask.setTask(taskToDelete);
                 personTasks.add(personTask);
             }
@@ -112,10 +118,9 @@ public class TaskServiceTest {
             return personTasks;
         });
 
-        taskService.delete(taskToDelete.getId());
+        taskService.delete(id);
 
-        verify(personTaskService, times(persons.size())).delete(argThat(personTask ->
-                taskToDelete.equals(personTask.getTask())));
-        verify(taskRepository).delete(taskToDelete);
+        verify(personTaskService, times(persons.size())).delete(any());
+        verify(taskRepository).deleteById(id);
     }
 }

@@ -6,15 +6,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.server.ResponseStatusException;
 import se.xlent.onboarding.entity.PersonEntity;
+import se.xlent.onboarding.entity.PersonTaskEntity;
 import se.xlent.onboarding.repository.PersonRepository;
 import se.xlent.onboarding.repository.PersonTaskRepository;
-import se.xlent.onboarding.service.PersonTaskService;
+import se.xlent.onboarding.service.PersonTaskServiceImpl;
+import se.xlent.onboarding.support.mapper.PersonTaskMapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -23,26 +25,24 @@ public class PersonTaskServiceTest {
 
     @Mock
     private PersonRepository personRepository;
-
     @Mock
     private PersonTaskRepository personTaskRepository;
-
+    @Mock
+    private PersonTaskMapper personTaskMapper;
 
     @InjectMocks
-    private PersonTaskService personTaskService;
+    private PersonTaskServiceImpl personTaskService;
 
     @Test
     void testGetAllByPersonId() {
+        Long id = 1L;
         PersonEntity person = new PersonEntity();
-        when(personRepository.findById(any())).thenReturn(Optional.of(person));
+        person.setId(id);
+        List<PersonTaskEntity> tasks = new ArrayList<>();
+        when(personTaskRepository.findByPersonId(any())).thenReturn(tasks);
 
-        personTaskService.getAllByPersonId(1L);
+        personTaskService.getAllByPersonId(id);
 
-        verify(personTaskRepository).findByPerson(person);
-    }
-
-    @Test
-    void testGetAllByPersonIdException() {
-        assertThrows(ResponseStatusException.class, () -> personTaskService.getAllByPersonId(anyLong()));
+        verify(personTaskRepository).findByPersonId(id);
     }
 }
