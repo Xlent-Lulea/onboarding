@@ -9,7 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import se.xlent.onboarding.entity.TaskTypeEntity;
+import se.xlent.onboarding.model.TaskType;
 import se.xlent.onboarding.service.TaskTypeService;
 
 import java.util.List;
@@ -23,13 +23,13 @@ public class TaskTypeController {
     private TaskTypeService taskTypeService;
 
     @GetMapping(value = "/taskTypes", produces = "application/json")
-    public  List<TaskTypeEntity> getAll() {
+    public  List<TaskType> getAll() {
         return taskTypeService.getAll();
     }
 
     @GetMapping(value = "/taskTypes/{id}", produces = "application/json")
-    public TaskTypeEntity getById(@PathVariable Long id) {
-        TaskTypeEntity taskType = taskTypeService.getById(id);
+    public TaskType getById(@PathVariable Long id) {
+        TaskType taskType = taskTypeService.getById(id);
 
         if (taskType == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "TaskType with id " + id + " not found");
@@ -39,12 +39,12 @@ public class TaskTypeController {
     }
 
     @PostMapping(value = "/taskTypes", consumes = "application/json", produces = "application/json")
-    public TaskTypeEntity create(@Valid @RequestBody TaskTypeEntity taskTypeEntity, HttpServletResponse response) {
-        return taskTypeService.save(taskTypeEntity);
+    public TaskType create(@Valid @RequestBody TaskType taskType, HttpServletResponse response) {
+        return taskTypeService.save(taskType);
     }
 
     @PutMapping(value = "/taskTypes/{id}", consumes = "application/json", produces = "application/json")
-    public TaskTypeEntity update(@PathVariable Long id, @Valid @RequestBody TaskTypeEntity taskType, HttpServletResponse response) {
+    public TaskType update(@PathVariable Long id, @Valid @RequestBody TaskType taskType, HttpServletResponse response) {
         response.setHeader("Location", ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/tasks/" + id).toUriString());
         return taskTypeService.save(taskType);
