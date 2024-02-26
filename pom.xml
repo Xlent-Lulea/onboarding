@@ -15,6 +15,14 @@
 	<description>Onboarding backend</description>
 	<properties>
 		<java.version>17</java.version>
+
+		<mapstruct.version>1.5.5.Final</mapstruct.version>
+		<maven.resources.plugin.version>3.3.1</maven.resources.plugin.version>
+		<org.mapstruct.extensions.spring.version>1.1.0</org.mapstruct.extensions.spring.version>
+		<junit.jupiter.testcontainers.version>1.19.3</junit.jupiter.testcontainers.version>
+		<toxiproxy.version>1.19.3</toxiproxy.version>
+		<ehchache.version>3.10.0</ehchache.version>
+		<awaitility.version>4.2.0</awaitility.version>
 	</properties>
 
 	<dependencies>
@@ -42,6 +50,12 @@
 			<optional>true</optional>
 		</dependency>
 
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>${mapstruct.version}</version>
+		</dependency>
+
 		<!-- JPA -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -65,7 +79,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>2.2.224</version>
+			<version>2.2.222</version>
 			<scope>runtime</scope>
 		</dependency>
 
@@ -77,6 +91,43 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration><jvmArguments>-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments></configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>${mapstruct.version}</version>
+						</path>
+						<path>
+							<groupId>org.mapstruct.extensions.spring</groupId>
+							<artifactId>mapstruct-spring-extensions</artifactId>
+							<version>${org.mapstruct.extensions.spring.version}</version>
+						</path>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
+						</path>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok-mapstruct-binding</artifactId>
+							<version>0.2.0</version>
+						</path>
+					</annotationProcessorPaths>
+					<compilerArgs>
+						<compilerArg>
+							-Amapstruct.defaultComponentModel=spring
+						</compilerArg>
+					</compilerArgs>
+				</configuration>
 			</plugin>
 
 		</plugins>
