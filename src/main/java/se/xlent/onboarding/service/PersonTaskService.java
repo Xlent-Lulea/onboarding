@@ -1,59 +1,23 @@
 package se.xlent.onboarding.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-import se.xlent.onboarding.entity.PersonEntity;
-import se.xlent.onboarding.entity.PersonTaskEntity;
-import se.xlent.onboarding.entity.TaskEntity;
-import se.xlent.onboarding.repository.PersonRepository;
-import se.xlent.onboarding.repository.PersonTaskRepository;
+import se.xlent.onboarding.model.PersonTask;
 
 import java.util.List;
 
-@Service
-public class PersonTaskService {
+public interface PersonTaskService {
+    List<PersonTask> getAllByPersonId(Long personId);
 
-    @Autowired
-    PersonTaskRepository personTaskRepository;
+    List<PersonTask> getAllByTaskId(Long taskId);
 
-    @Autowired
-    PersonRepository personRepository;
+    PersonTask getById(Long id);
 
-    public List<PersonTaskEntity> getAllByPersonId(Long personId) {
-        PersonEntity person = personRepository.findById(personId).orElse(null);
+    PersonTask getByPersonIdAndTaskId(Long personId, Long taskId);
 
-        if (person == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Person with id " + personId + " not found");
-        }
+    PersonTask save(PersonTask personTask);
 
-        return personTaskRepository.findByPerson(person);
-    }
+    PersonTask toggleTaskCompletionStatus(Long taskId);
 
-    public List<PersonTaskEntity> getAllByTask(TaskEntity task) {
-        return personTaskRepository.findByTask(task);
-    }
+    PersonTask reset(PersonTask task);
 
-    public PersonTaskEntity getById(Long id) {
-        return personTaskRepository.findById(id).orElse(null);
-    }
-
-    public PersonTaskEntity getByPersonAndTask(PersonEntity person, TaskEntity task) {
-        return personTaskRepository.findByPersonAndTask(person, task);
-    }
-
-    public PersonTaskEntity save(PersonTaskEntity personTask) {
-        return personTaskRepository.save(personTask);
-    }
-
-    public PersonTaskEntity toggleTaskCompletionStatus(Long taskId) {
-        PersonTaskEntity personTaskEntity = getById(taskId);
-        personTaskEntity.setIsCompleted(!personTaskEntity.getIsCompleted());
-        return personTaskRepository.save(personTaskEntity);
-    }
-
-    public void delete(PersonTaskEntity personTask) {
-        personTaskRepository.delete(personTask);
-    }
+    void delete(Long id);
 }
