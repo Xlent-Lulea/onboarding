@@ -2,43 +2,34 @@ package se.xlent.onboarding.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "PERSON_TASK")
 public class PersonTaskEntity {
 
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 
-    @Getter
-    @Setter
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "TASK_ID")
     private TaskEntity task;
 
-    @Getter
-    @Setter
     @JsonIgnore
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "PERSON_ID")
     private PersonEntity person;
 
-    @Getter
-    @Setter
     @Column(name = "IS_COMPLETED")
     private Boolean isCompleted;
-
-    public PersonTaskEntity updatePersonTaskValues(TaskEntity task, PersonEntity person) {
-        this.setPerson(person);
-        this.setTask(task);
-        this.setIsCompleted(false);
-        return this;
-    }
 }
