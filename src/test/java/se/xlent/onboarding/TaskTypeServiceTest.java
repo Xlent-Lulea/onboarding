@@ -11,7 +11,7 @@ import se.xlent.onboarding.model.Task;
 import se.xlent.onboarding.model.TaskType;
 import se.xlent.onboarding.repository.TaskRepository;
 import se.xlent.onboarding.repository.TaskTypeRepository;
-import se.xlent.onboarding.service.TaskServiceImpl;
+import se.xlent.onboarding.service.TaskService;
 import se.xlent.onboarding.service.TaskTypeServiceImpl;
 import se.xlent.onboarding.support.mapper.TaskMapper;
 import se.xlent.onboarding.support.mapper.TaskTypeMapper;
@@ -35,7 +35,7 @@ public class TaskTypeServiceTest {
     private TaskRepository taskRepository;
 
     @Mock
-    private TaskServiceImpl taskService;
+    private TaskService taskService;
 
     @Mock
     private TaskTypeRepository taskTypeRepository;

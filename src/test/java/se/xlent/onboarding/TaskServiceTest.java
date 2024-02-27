@@ -28,10 +28,10 @@ public class TaskServiceTest {
     private TaskMapper taskMapper;
 
     @Mock
-    private PersonServiceImpl personService;
+    private PersonService personService;
 
     @Mock
-    private PersonTaskServiceImpl personTaskService;
+    private PersonTaskService personTaskService;
 
     @Mock
     private TaskRepository taskRepository;
