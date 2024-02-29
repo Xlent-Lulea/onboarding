@@ -1,6 +1,5 @@
 package se.xlent.onboarding;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONException;
@@ -32,9 +31,7 @@ public class PersonEntityControllerTest {
     private static RestTemplate restTemplate;
     private static HttpHeaders headers;
     private static JSONObject personJsonObject;
-
     private final ObjectMapper objectMapper = new ObjectMapper();
-
 
     @BeforeEach
     void runBeforeAllTestMethods() throws JSONException {
@@ -47,7 +44,6 @@ public class PersonEntityControllerTest {
         personJsonObject = new JSONObject();
         personJsonObject.put("id", 1);
         personJsonObject.put("name", "John");
-
     }
 
     // Add your test methods here
@@ -64,12 +60,11 @@ public class PersonEntityControllerTest {
         assertNotNull(personResultAsJsonStr);
         assertNotNull(root);
         assertNotNull(root.path("name").asText());
-//
+
         PersonEntity personEntity = restTemplate.postForObject(createPersonUrl, request, PersonEntity.class);
 
         assertNotNull(personEntity);
         assertNotNull(personEntity.getName());
-
     }
 
     @Test
@@ -91,8 +86,5 @@ public class PersonEntityControllerTest {
 
         assertNotNull(locationHeader);
     }
-
-
-
 }
 

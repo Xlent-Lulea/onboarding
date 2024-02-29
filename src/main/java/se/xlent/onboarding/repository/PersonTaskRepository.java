@@ -11,9 +11,9 @@ import java.util.List;
 
 @Repository
 public interface PersonTaskRepository extends JpaRepository<PersonTaskEntity, Long> {
-    List<PersonTaskEntity> findByPerson(PersonEntity person);
+    List<PersonTaskEntity> findByPersonId(Long personId);
 
-    PersonTaskEntity findByPersonAndTask(PersonEntity person, TaskEntity task);
+    PersonTaskEntity findByPersonIdAndTaskId(Long personId, Long taskId);
 
-    List<PersonTaskEntity> findByTask(TaskEntity task);
+    List<PersonTaskEntity> findByTaskId(Long taskId);
 }
