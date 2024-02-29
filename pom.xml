@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>se.xlent</groupId>
 	<artifactId>onboarding</artifactId>
-	<version>0.8.5</version>
+	<version>1.0.0</version>
 	<name>onboarding</name>
 	<description>Onboarding backend</description>
 	<properties>
